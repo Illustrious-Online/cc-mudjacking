@@ -17,10 +17,10 @@ ingress:
   className: "nginx"
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  host: ccmudjacker.com
+  host: ccmudjacking.com
   path: /
   pathType: Prefix
-  tlsSecretName: cc-mudjacker-tls
+  tlsSecretName: cc-mudjacking-tls
 
 resources:
   limits:
