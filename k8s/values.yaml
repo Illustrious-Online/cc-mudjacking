@@ -1,10 +1,10 @@
 replicaCount: 2
 
 deployment:
-  namespace: cc-mudjacker
+  namespace: cc-mudjacking
 
 image:
-  repository: Illustrious-Online/cc-mudjacker
+  repository: Illustrious-Online/cc-mudjacking
   tag: 0.0.1
   pullPolicy: Always
 

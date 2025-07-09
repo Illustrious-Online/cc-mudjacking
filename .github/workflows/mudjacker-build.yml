@@ -1,4 +1,4 @@
-name: "[cc-mudjacker] Execute checks & tests"
+name: "[cc-mudjacking] Execute checks & tests"
 permissions:
   contents: read
   pull-requests: write
@@ -9,7 +9,7 @@ on:
       - synchronize
       - reopened
 jobs:
-  cc-mudjacker-check-and-test:
+  cc-mudjacking-check-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Bun
@@ -28,9 +28,9 @@ jobs:
         uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: cc-mudjacker
+          flags: cc-mudjacking
           files: ./coverage/lcov-report/index-lcov.html
-          slug: Illustrious-Online/cc-mudjacker
+          slug: Illustrious-Online/cc-mudjacking
       - name: Run vitest with junit output
         run: bun run test:junit
       - name: Upload test results to Codecov
@@ -38,5 +38,5 @@ jobs:
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: cc-mudjacker
-          slug: Illustrious-Online/cc-mudjacker
+          flags: cc-mudjacking
+          slug: Illustrious-Online/cc-mudjacking

@@ -1,4 +1,4 @@
-name: "[cc-mudjacker] Perform release"
+name: "[cc-mudjacking] Perform release"
 permissions:
   contents: read
   pull-requests: write
@@ -7,7 +7,7 @@ on:
     branches:
       - main
 jobs:
-  cc-mudjacker-release:
+  cc-mudjacking-release:
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
     env:
@@ -28,11 +28,11 @@ jobs:
         run: bun install -g spaces-cli
       - name: Download dependency files
         run: |
-          spaces-cli down $SPACE_URL/cc-mudjacker/local.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cc-mudjacking/local.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/instrumentation.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-          spaces-cli down $SPACE_URL/cc-mudjacker/sentry.client.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-          spaces-cli down $SPACE_URL/cc-mudjacker/sentry.edge.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-          spaces-cli down $SPACE_URL/cc-mudjacker/sentry.server.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cc-mudjacking/sentry.client.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cc-mudjacking/sentry.edge.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cc-mudjacking/sentry.server.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Install Dependencies
         run: bun install --frozen-lockfile
       - name: Run unit tests
@@ -41,9 +41,9 @@ jobs:
         uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: cc-mudjacker
+          flags: cc-mudjacking
           files: ./coverage/lcov-report/index-lcov.html
-          slug: Illustrious-Online/cc-mudjacker
+          slug: Illustrious-Online/cc-mudjacking
       - name: Run vitest with junit output
         run: bun run test:junit
       - name: Upload test results to Codecov
@@ -51,12 +51,12 @@ jobs:
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: cc-mudjacker
-          slug: Illustrious-Online/cc-mudjacker
+          flags: cc-mudjacking
+          slug: Illustrious-Online/cc-mudjacking
       - name: Replace .env file for production
         run: |
           rm -rf .env
-          spaces-cli down $SPACE_URL/cc-mudjacker/production.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cc-mudjacking/production.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Compare versions
         id: compare
         run: |

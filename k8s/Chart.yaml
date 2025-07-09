@@ -1,6 +1,6 @@
 apiVersion: v2
-name: cc-mudjacker
-description: Helm chart for deploying the cc-mudjacker application
+name: cc-mudjacking
+description: Helm chart for deploying the cc-mudjacking application
 type: application
 version: 0.0.1
 appVersion: "0.0.1"
