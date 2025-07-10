@@ -69,9 +69,14 @@ export default function ResetPasswordForm() {
   useEffect(() => {
     const setPasswordReset = async () => {
       if (user) {
-        await new UserService().updateUser(user?.id, {
-          passwordReset: true,
-        });
+        try {
+          await new UserService().updateUser(user?.id, {
+            passwordReset: true,
+          });
+        } catch (error) {
+          // Silently handle the error - the form should still be usable
+          console.warn('Failed to update user password reset flag:', error);
+        }
       }
     };
 
