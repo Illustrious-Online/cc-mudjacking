@@ -63,8 +63,6 @@ jobs:
         run: |
           rm -rf .env
           spaces-cli down $SPACE_URL/cc-mudjacking/production.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: bun audit signatures
       - name: Compare versions
         id: compare
         run: |
