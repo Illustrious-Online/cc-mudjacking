@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Button, Flex, VStack } from '@chakra-ui/react';
 import { Form, Formik, type FormikValues } from 'formik';
