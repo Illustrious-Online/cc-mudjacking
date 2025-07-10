@@ -5,7 +5,7 @@ deployment:
 
 image:
   repository: Illustrious-Online/cc-mudjacking
-  tag: 0.0.1
+  tag: 0.0.2
   pullPolicy: Always
 
 service:
