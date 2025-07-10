@@ -75,6 +75,7 @@ export default function ResetPasswordForm() {
           });
         } catch (error) {
           // Silently handle the error - the form should still be usable
+          // biome-ignore lint/suspicious/noConsole: Used as a bypass
           console.warn('Failed to update user password reset flag:', error);
         }
       }
