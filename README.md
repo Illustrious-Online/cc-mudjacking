@@ -1,36 +1,228 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CC Mudjacking - Professional Concrete Lifting Services
 
-## Getting Started
+A modern, responsive website for CC Mudjacking, a professional concrete lifting and foundation repair company. Built with Next.js 15, Chakra UI, and Supabase authentication.
 
-First, run the development server:
+## 🏗️ About
+
+CC Mudjacking provides professional concrete lifting and foundation repair services including:
+
+- **Residential Mudjacking**: Driveways, sidewalks, patios, and garage floors
+- **Commercial Services**: Warehouse floors, parking lots, and loading docks  
+- **Foundation Repair**: Slab jacking, void filling, and settlement issues
+
+## ✨ Features
+
+- **Modern UI/UX**: Beautiful, responsive design with Chakra UI components
+- **Authentication System**: Secure user authentication with Supabase
+- **Contact Forms**: Easy-to-use contact and quote request forms
+- **Before/After Gallery**: Showcase of completed projects
+- **Mobile Responsive**: Optimized for all device sizes
+- **SEO Optimized**: Built-in SEO features for better search visibility
+- **Performance**: Fast loading with Next.js optimization
+- **Testing**: Comprehensive test coverage with Vitest
+- **Type Safety**: Full TypeScript support
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Next.js 15** - React framework with App Router
+- **React 19** - UI library
+- **Chakra UI 3** - Component library and design system
+- **TypeScript** - Type safety
+- **Framer Motion** - Animations
+- **React Icons** - Icon library
+
+### Backend & Services
+
+- **Supabase** - Authentication and database
+- **Formik** - Form handling
+- **Zod** - Schema validation
+
+### Development Tools
+
+- **Bun** - Package manager and runtime
+- **Vitest** - Testing framework
+- **Biome** - Linting and formatting
+- **Husky** - Git hooks
+- **Sentry** - Error monitoring
+
+### Deployment
+
+- **Docker** - Containerization
+- **Kubernetes** - Orchestration
+- **Nginx Ingress** - Load balancing
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Bun](https://bun.sh/) (latest version)
+- [Node.js](https://nodejs.org/) 18+ (if not using Bun)
+- [Git](https://git-scm.com/)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-username/cc-mudjacking.git
+   cd cc-mudjacking
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   bun install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory:
+
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **Start the development server**
+
+   ```bash
+   bun dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📝 Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `bun dev` | Start development server |
+| `bun build` | Build for production |
+| `bun start` | Start production server |
+| `bun test` | Run tests with coverage |
+| `bun test:junit` | Run tests with JUnit reporter |
+| `bun check` | Run Biome linting |
+| `bun check:fix` | Fix Biome linting issues |
+
+## 🧪 Testing
+
+The project uses Vitest for testing with comprehensive coverage:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Run all tests
+bun test
+
+# Run tests with JUnit reporter
+bun test:junit
+
+# Run tests in watch mode
+bun test --watch
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🐳 Docker Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build the Docker image
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+docker build -t cc-mudjacking .
+```
 
-## Learn More
+### Run the container
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker run -p 3000:3000 cc-mudjacking
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ☸️ Kubernetes Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The project includes Kubernetes manifests for production deployment:
 
-## Deploy on Vercel
+### Deploy to Kubernetes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Install the Helm chart
+helm install cc-mudjacking ./k8s
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Upgrade existing deployment
+helm upgrade cc-mudjacking ./k8s
+
+# Uninstall
+helm uninstall cc-mudjacking
+```
+
+### Configuration
+
+Edit `k8s/values.yaml` to customize:
+
+- Replica count
+- Resource limits
+- Ingress settings
+- Image repository
+
+## 📁 Project Structure
+
+```text
+cc-mudjacking/
+├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes
+│   ├── auth/              # Authentication pages
+│   └── page.tsx           # Home page
+├── components/            # Reusable UI components
+│   └── ui/               # Base UI components
+├── contexts/             # React contexts
+├── lib/                  # Utility libraries
+│   └── supabase/        # Supabase client configuration
+├── providers/            # App providers
+├── services/             # Business logic services
+├── types/                # TypeScript type definitions
+├── k8s/                  # Kubernetes manifests
+└── public/               # Static assets
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Yes |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key | Yes |
+
+### Chakra UI Theme
+
+The project uses a custom Chakra UI theme with brand colors. Edit `providers/ChakraProvider.tsx` to customize the theme.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow the existing code style
+- Write tests for new features
+- Update documentation as needed
+- Use conventional commit messages
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For support, email nick@illustrious.online or create an issue in this repository.
+
+## 🔗 Links
+
+- **Website**: [ccmudjacking.com](https://ccmudjacking.com)
+- **Documentation**: [Next.js Docs](https://nextjs.org/docs)
+- **Chakra UI**: [chakra-ui.com](https://chakra-ui.com)
+- **Supabase**: [supabase.com](https://supabase.com)
+
+---
+
+Built with ❤️ by the Illustrious Online team

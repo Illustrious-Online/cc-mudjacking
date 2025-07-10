@@ -1,88 +1,68 @@
-"use client";
+'use client';
 
-import InputControl from "@/components/ui/input-control";
-import NavLink from "@/components/ui/nav-link";
-import { toaster } from "@/components/ui/toaster";
-import { useAuth } from "@/contexts/AuthContext";
-import { Flex, IconButton, VStack } from "@chakra-ui/react";
-import { Button, Text } from "@chakra-ui/react";
-import { Form, Formik, type FormikValues } from "formik";
-import { withZodSchema } from "formik-validator-zod";
-import { redirect } from "next/navigation";
-import { FaDiscord } from "react-icons/fa";
-import { z } from "zod";
+import { Button, Flex, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Form, Formik, type FormikValues } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
+import { redirect } from 'next/navigation';
+import { FaDiscord } from 'react-icons/fa';
+import { z } from 'zod';
+import InputControl from '@/components/ui/input-control';
+import NavLink from '@/components/ui/nav-link';
+import { toaster } from '@/components/ui/toaster';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function RegistrationForm() {
-  const { signUp, signInWithOAuth } = useAuth();
+  const { signUp, signInWithOauth } = useAuth();
   const authSchema = z
     .object({
-      email: z
-        .string()
-        .email("Invalid email address")
-        .min(1, "Email is required"),
+      email: z.string().email().min(1, 'Email is required'),
       password: z
         .string()
-        .regex(/[0-9]/, "Password must contain at least one number")
-        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(
-          /[@$!%*?&]/,
-          "Password must contain at least one special character",
-        )
-        .min(8, "Password must be at least 8 characters")
-        .min(1, "Password is required"),
-      confirmPassword: z.string().min(1, "Password confirmation is required"),
+        .regex(/[0-9]/, 'Password must contain at least one number')
+        .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .regex(/[@$!%*?&]/, 'Password must contain at least one special character')
+        .min(8, 'Password must be at least 8 characters')
+        .min(1, 'Password is required'),
+      confirmPassword: z.string().min(1, 'Password confirmation is required'),
       phone: z.string().optional(),
     })
-    .superRefine(({ confirmPassword, password }, ctx) => {
-      if (confirmPassword !== password) {
-        ctx.addIssue({
-          code: "custom",
-          message: "The passwords did not match",
-          path: ["confirmPassword"],
-        });
-      }
+    .refine(({ confirmPassword, password }) => confirmPassword === password, {
+      message: 'The passwords did not match',
+      path: ['confirmPassword'],
     });
 
   const handleRegistration = async (values: FormikValues) => {
     try {
-      const { error } = await signUp(
-        values.email,
-        values.password,
-        values.phone,
-      );
+      const { error } = await signUp(values.email, values.password, values.phone);
 
       if (error) {
         throw error;
       }
 
-      redirect("/");
+      redirect('/');
     } catch (error) {
       const err = error as Error;
       toaster.create({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        type: "error",
+        type: 'error',
         duration: 2500,
       });
-      console.error("Authentication error:", error);
     }
   };
 
-  const handleOAuthSignIn = async (
-    provider: "google" | "github" | "facebook" | "discord",
-  ) => {
+  const handleOauthSignIn = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
     try {
-      await signInWithOAuth(provider);
+      await signInWithOauth(provider);
     } catch (error) {
       const err = error as Error;
       toaster.create({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        type: "error",
+        type: 'error',
         duration: 2500,
       });
-      console.error("OAuth error:", error);
     }
   };
 
@@ -94,17 +74,16 @@ export default function RegistrationForm() {
         confirmPassword: string;
         phone?: string;
       }>
-        enableReinitialize={true}
         initialValues={{
-          email: "",
-          password: "",
-          confirmPassword: "",
-          phone: "",
+          email: '',
+          password: '',
+          confirmPassword: '',
+          phone: '',
         }}
         initialErrors={{
-          email: "Email is required",
-          password: "Password is required",
-          confirmPassword: "Password confirmation is required",
+          email: 'Email is required',
+          password: 'Password is required',
+          confirmPassword: 'Password confirmation is required',
         }}
         validate={withZodSchema(authSchema)}
         onSubmit={(values, { setSubmitting }) => {
@@ -125,8 +104,8 @@ export default function RegistrationForm() {
         }) => (
           <Form
             style={{
-              width: "100vw",
-              maxWidth: "25em",
+              width: '100vw',
+              maxWidth: '25em',
             }}
           >
             <VStack gap={2}>
@@ -185,26 +164,12 @@ export default function RegistrationForm() {
                 errors={errors.phone}
               />
 
-              <Flex
-                marginTop={2}
-                gap={4}
-                flexDirection="row"
-                justifyContent="space-between"
-              >
-                <Button
-                  type="submit"
-                  size={"sm"}
-                  loading={isSubmitting}
-                  disabled={!isValid}
-                >
+              <Flex marginTop={2} gap={4} flexDirection="row" justifyContent="space-between">
+                <Button type="submit" size={'sm'} loading={isSubmitting} disabled={!isValid}>
                   Register
                 </Button>
 
-                <NavLink
-                  href="/auth/login"
-                  asButton
-                  buttonProps={{ variant: "ghost", size: "sm" }}
-                >
+                <NavLink href="/auth/login" asButton buttonProps={{ variant: 'ghost', size: 'sm' }}>
                   Already have an account?
                 </NavLink>
               </Flex>
@@ -220,7 +185,7 @@ export default function RegistrationForm() {
         marginTop={4}
         variant="outline"
         aria-label="Discord"
-        onClick={() => handleOAuthSignIn("discord")}
+        onClick={() => handleOauthSignIn('discord')}
       >
         <FaDiscord />
       </IconButton>

@@ -1,20 +1,20 @@
-import { toaster } from "@/components/ui/toaster";
-import { useAuth } from "@/contexts/AuthContext";
-import { ChakraProvider } from "@/providers/ChakraProvider";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { useRouter } from "next/navigation";
-import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
-import LoginForm from "./login-form";
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { useRouter } from 'next/navigation';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+import { toaster } from '@/components/ui/toaster';
+import { useAuth } from '@/contexts/AuthContext';
+import { ChakraProvider } from '@/providers/ChakraProvider';
+import LoginForm from './login-form';
 
-vi.mock("@/contexts/AuthContext", () => ({
+vi.mock('@/contexts/AuthContext', () => ({
   useAuth: vi.fn(),
 }));
 
-vi.mock("next/navigation", () => ({
+vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
 }));
 
-vi.mock("@/components/ui/toaster", () => ({
+vi.mock('@/components/ui/toaster', () => ({
   toaster: {
     create: vi.fn(),
   },
@@ -24,19 +24,19 @@ const renderLoginForm = () => {
   return render(
     <ChakraProvider>
       <LoginForm />
-    </ChakraProvider>,
+    </ChakraProvider>
   );
 };
 
-describe("LoginForm", () => {
+describe('LoginForm', () => {
   const mockSignIn = vi.fn();
-  const mockSignInWithOAuth = vi.fn();
+  const mockSignInWithOauth = vi.fn();
   const mockPush = vi.fn();
 
   beforeEach(() => {
     (useAuth as Mock).mockReturnValue({
       signIn: mockSignIn,
-      signInWithOAuth: mockSignInWithOAuth,
+      signInWithOauth: mockSignInWithOauth,
     });
     (useRouter as Mock).mockReturnValue({
       push: mockPush,
@@ -44,7 +44,7 @@ describe("LoginForm", () => {
     vi.clearAllMocks();
   });
 
-  it("renders the login form", () => {
+  it('renders the login form', () => {
     renderLoginForm();
     expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("LoginForm", () => {
     expect(screen.getByText(/or sign in with/i)).toBeInTheDocument();
   });
 
-  it("shows validation errors when submitting empty form", async () => {
+  it('shows validation errors when submitting empty form', async () => {
     renderLoginForm();
     expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText(/email address/i));
@@ -72,17 +72,17 @@ describe("LoginForm", () => {
     });
   });
 
-  it("calls signIn with email and password on valid form submission", async () => {
+  it('calls signIn with email and password on valid form submission', async () => {
     mockSignIn.mockResolvedValueOnce({ error: null });
 
     renderLoginForm();
     expect(screen.getByText(/login/i)).toBeInTheDocument();
     expect(screen.getByText(/login/i)).toBeDisabled();
     fireEvent.change(screen.getByLabelText(/email address/i), {
-      target: { value: "test@example.com" },
+      target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: "password123" },
+      target: { value: 'password123' },
     });
     await waitFor(() => {
       expect(screen.getByText(/login/i)).toBeEnabled();
@@ -90,25 +90,22 @@ describe("LoginForm", () => {
     fireEvent.click(screen.getByText(/login/i));
 
     await waitFor(() => {
-      expect(mockSignIn).toHaveBeenCalledWith(
-        "test@example.com",
-        "password123",
-      );
-      expect(mockPush).toHaveBeenCalledWith("/");
+      expect(mockSignIn).toHaveBeenCalledWith('test@example.com', 'password123');
+      expect(mockPush).toHaveBeenCalledWith('/');
     });
   });
 
-  it("shows an error toast if signIn fails", async () => {
+  it('shows an error toast if signIn fails', async () => {
     mockSignIn.mockResolvedValueOnce({
-      error: new Error("Invalid credentials"),
+      error: new Error('Invalid credentials'),
     });
 
     renderLoginForm();
     fireEvent.change(screen.getByLabelText(/email address/i), {
-      target: { value: "test@example.com" },
+      target: { value: 'test@example.com' },
     });
     fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: "wrongpassword" },
+      target: { value: 'wrongpassword' },
     });
     await waitFor(() => {
       expect(screen.getByText(/login/i)).toBeEnabled();
@@ -117,34 +114,34 @@ describe("LoginForm", () => {
 
     await waitFor(() => {
       expect(toaster.create).toHaveBeenCalledWith({
-        title: "Error",
-        description: "Invalid credentials",
-        type: "error",
+        title: 'Error',
+        description: 'Invalid credentials',
+        type: 'error',
         duration: 2500,
       });
     });
   });
 
-  it("calls signInWithOAuth when OAuth button is clicked", async () => {
+  it('calls signInWithOauth when OAuth button is clicked', async () => {
     renderLoginForm();
     fireEvent.click(screen.getByLabelText(/discord/i));
 
     await waitFor(() => {
-      expect(mockSignInWithOAuth).toHaveBeenCalledWith("discord");
+      expect(mockSignInWithOauth).toHaveBeenCalledWith('discord');
     });
   });
 
-  it("shows an error toast if signInWithOAuth fails", async () => {
-    mockSignInWithOAuth.mockRejectedValueOnce(new Error("OAuth error"));
+  it('shows an error toast if signInWithOauth fails', async () => {
+    mockSignInWithOauth.mockRejectedValueOnce(new Error('OAuth error'));
 
     renderLoginForm();
     fireEvent.click(screen.getByLabelText(/discord/i));
 
     await waitFor(() => {
       expect(toaster.create).toHaveBeenCalledWith({
-        title: "Error",
-        description: "OAuth error",
-        type: "error",
+        title: 'Error',
+        description: 'OAuth error',
+        type: 'error',
         duration: 2500,
       });
     });

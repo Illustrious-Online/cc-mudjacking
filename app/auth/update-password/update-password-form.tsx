@@ -1,17 +1,16 @@
-"use client";
+'use client';
 
-import InputControl from "@/components/ui/input-control";
-import NavLink from "@/components/ui/nav-link";
-import { toaster } from "@/components/ui/toaster";
-import { useAuth } from "@/contexts/AuthContext";
-import { UserService } from "@/services/user-service";
-import { Flex, VStack } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
-import { Form, Formik, type FormikValues } from "formik";
-import { withZodSchema } from "formik-validator-zod";
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
-import { set, z } from "zod";
+import { Button, Flex, VStack } from '@chakra-ui/react';
+import { Form, Formik, type FormikValues } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
+import { z } from 'zod';
+import InputControl from '@/components/ui/input-control';
+import NavLink from '@/components/ui/nav-link';
+import { toaster } from '@/components/ui/toaster';
+import { useAuth } from '@/contexts/AuthContext';
+import { UserService } from '@/services/user-service';
 
 export default function ResetPasswordForm() {
   const { isLoading, user, session, updatePassword, signOut } = useAuth();
@@ -19,23 +18,20 @@ export default function ResetPasswordForm() {
     .object({
       password: z
         .string()
-        .min(1, "Password is required")
-        .min(8, "Password must be at least 8 characters")
-        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .regex(/[0-9]/, "Password must contain at least one number")
-        .regex(
-          /[@$!%*?&]/,
-          "Password must contain at least one special character",
-        ),
-      confirmPassword: z.string().min(1, "Password confirmation is required"),
+        .min(1, 'Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .regex(/[0-9]/, 'Password must contain at least one number')
+        .regex(/[@$!%*?&]/, 'Password must contain at least one special character'),
+      confirmPassword: z.string().min(1, 'Password confirmation is required'),
     })
     .superRefine(({ confirmPassword, password }, ctx) => {
       if (confirmPassword !== password) {
         ctx.addIssue({
-          code: "custom",
-          message: "The passwords did not match",
-          path: ["confirmPassword"],
+          code: 'custom',
+          message: 'The passwords did not match',
+          path: ['confirmPassword'],
         });
       }
     });
@@ -51,24 +47,22 @@ export default function ResetPasswordForm() {
       await signOut();
 
       toaster.create({
-        title: "Success",
-        description:
-          "Password updated successfully. You will be redirected to the login page.",
-        type: "success",
+        title: 'Success',
+        description: 'Password updated successfully. You will be redirected to the login page.',
+        type: 'success',
         duration: 2500,
       });
       setTimeout(() => {
-        redirect("/auth/login");
+        redirect('/auth/login');
       }, 2500);
     } catch (error) {
       const err = error as Error;
       toaster.create({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        type: "error",
+        type: 'error',
         duration: 2500,
       });
-      console.error("Authentication error:", error);
     }
   };
 
@@ -81,15 +75,15 @@ export default function ResetPasswordForm() {
       }
     };
 
-    if (!isLoading && !session) {
+    if (!(isLoading || session)) {
       toaster.create({
-        title: "Error",
-        description: "You are not authenticated.",
-        type: "error",
+        title: 'Error',
+        description: 'You are not authenticated.',
+        type: 'error',
         duration: 2500,
       });
       setTimeout(() => {
-        redirect("/auth/login");
+        redirect('/auth/login');
       }, 2500);
     } else {
       setPasswordReset();
@@ -99,10 +93,10 @@ export default function ResetPasswordForm() {
   return (
     <>
       <Formik<{ password: string; confirmPassword: string }>
-        initialValues={{ password: "", confirmPassword: "" }}
+        initialValues={{ password: '', confirmPassword: '' }}
         initialErrors={{
-          password: "Password is required",
-          confirmPassword: "Password confirmation is required",
+          password: 'Password is required',
+          confirmPassword: 'Password confirmation is required',
         }}
         validate={withZodSchema(authSchema)}
         onSubmit={(values, { setSubmitting }) => {
@@ -110,19 +104,11 @@ export default function ResetPasswordForm() {
           setSubmitting(false);
         }}
       >
-        {({
-          isValid,
-          isSubmitting,
-          touched,
-          errors,
-          values,
-          handleChange,
-          handleBlur,
-        }) => (
+        {({ isValid, isSubmitting, touched, errors, values, handleChange, handleBlur }) => (
           <Form
             style={{
-              width: "100vw",
-              maxWidth: "25em",
+              width: '100vw',
+              maxWidth: '25em',
             }}
           >
             <VStack gap={2}>
@@ -154,18 +140,8 @@ export default function ResetPasswordForm() {
                 errors={errors.confirmPassword}
               />
 
-              <Flex
-                marginTop={2}
-                gap={4}
-                flexDirection="row"
-                justifyContent="space-between"
-              >
-                <Button
-                  type="submit"
-                  size={"sm"}
-                  loading={isSubmitting}
-                  disabled={!isValid}
-                >
+              <Flex marginTop={2} gap={4} flexDirection="row" justifyContent="space-between">
+                <Button type="submit" size={'sm'} loading={isSubmitting} disabled={!isValid}>
                   Update Password
                 </Button>
               </Flex>
@@ -174,12 +150,7 @@ export default function ResetPasswordForm() {
         )}
       </Formik>
 
-      <NavLink
-        href="/auth/login"
-        asButton
-        buttonProps={{ variant: "plain" }}
-        marginTop={4}
-      >
+      <NavLink href="/auth/login" asButton buttonProps={{ variant: 'plain' }} marginTop={4}>
         Back to Login
       </NavLink>
     </>

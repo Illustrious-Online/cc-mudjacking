@@ -38,7 +38,7 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
       <Box height="100vh" display="flex" flexDirection="column">
         <Toaster />
         <Flex as="nav" padding={4} color="white" align="center">
-          <Image borderRadius="md" src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} alt="Logo" width={14} />
+          <Image borderRadius="md" src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} alt="Logo" width={"6rem"} />
           <Spacer />
           {session && (
             <Button variant={"ghost"} onClick={handleSignOut}>

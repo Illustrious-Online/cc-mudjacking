@@ -4,7 +4,9 @@ import { FullPageSkeletonLoader } from "./loader";
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { isLoading } = useAuth();
 
-  if (isLoading) return <FullPageSkeletonLoader />; // Show skeleton while loading
+  if (isLoading) {
+    return <FullPageSkeletonLoader />;
+  }
 
   return <>{children}</>;
 };

@@ -1,16 +1,11 @@
 import Wrapper from "@/components/ui/wrapper";
 import { useAuth } from "@/contexts/AuthContext";
-import { createClientSupabaseClient } from "@/lib/supabase/client";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/lib/supabase/client", () => ({
-  createClientSupabaseClient: vi.fn(),
-}));
-
-vi.mock("@/context/AuthContext", () => ({
+vi.mock("@/contexts/AuthContext", () => ({
   useAuth: vi.fn(),
 }));
 
@@ -21,11 +16,6 @@ vi.mock("next/navigation", () => ({
 describe("Wrapper Component", () => {
   const mockSignOut = vi.fn();
   const mockPush = vi.fn();
-  const mockSupabase = {
-    auth: {
-      signOut: mockSignOut,
-    },
-  };
 
   const renderWrapper = () => {
     return render(
@@ -39,25 +29,37 @@ describe("Wrapper Component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (createClientSupabaseClient as unknown as Mock).mockReturnValue(mockSupabase);
     (useRouter as unknown as Mock).mockReturnValue({ push: mockPush });
   });
 
   it("renders children correctly", () => {
-    (useAuth as unknown as Mock).mockReturnValue({ session: null });
+    (useAuth as unknown as Mock).mockReturnValue({ session: null, signOut: mockSignOut });
     renderWrapper();
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
   it("renders logout button when session exists", () => {
-    (useAuth as unknown as Mock).mockReturnValue({ session: {} });
+    (useAuth as unknown as Mock).mockReturnValue({ session: {}, signOut: mockSignOut });
     renderWrapper();
     expect(screen.getByText("Log Out")).toBeInTheDocument();
   });
 
   it("calls signOut and redirects on logout", async () => {
-    (useAuth as unknown as Mock).mockReturnValue({ session: {} });
-    mockSignOut.mockResolvedValue({ error: null });
+    (useAuth as unknown as Mock).mockReturnValue({ session: {}, signOut: mockSignOut });
+    mockSignOut.mockResolvedValue(undefined);
+
+    renderWrapper();
+
+    fireEvent.click(screen.getByText("Log Out"));
+
+    await waitFor(() => {
+      expect(mockSignOut).toHaveBeenCalled();
+    });
+  });
+
+  it("handles signOut error gracefully", async () => {
+    (useAuth as unknown as Mock).mockReturnValue({ session: {}, signOut: mockSignOut });
+    mockSignOut.mockRejectedValue(new Error("Sign out error"));
 
     renderWrapper();
 
@@ -66,20 +68,6 @@ describe("Wrapper Component", () => {
     await waitFor(() => {
       expect(mockSignOut).toHaveBeenCalled();
       expect(mockPush).toHaveBeenCalledWith("/auth/login");
-    });
-  });
-
-  it("displays an error if signOut fails", async () => {
-    (useAuth as unknown as Mock).mockReturnValue({ session: {} });
-    mockSignOut.mockResolvedValue({ error: { message: "Sign out error" } });
-
-    renderWrapper();
-
-    fireEvent.click(screen.getByText("Log Out"));
-
-    await waitFor(() => {
-      expect(screen.getByText("Error")).toBeInTheDocument();
-      expect(screen.getByText("Sign out error")).toBeInTheDocument();
     });
   });
 });

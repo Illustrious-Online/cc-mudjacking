@@ -1,20 +1,16 @@
-import InputControl from "@/components/ui/input-control";
-import NavLink from "@/components/ui/nav-link";
-import { toaster } from "@/components/ui/toaster";
-import { useAuth } from "@/contexts/AuthContext";
-import { Flex, VStack } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
-import { Form, Formik, type FormikValues } from "formik";
-import { withZodSchema } from "formik-validator-zod";
-import { z } from "zod";
+import { Button, Flex, VStack } from '@chakra-ui/react';
+import { Form, Formik, type FormikValues } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
+import { z } from 'zod';
+import InputControl from '@/components/ui/input-control';
+import NavLink from '@/components/ui/nav-link';
+import { toaster } from '@/components/ui/toaster';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function ResetPasswordForm() {
   const { resetPassword } = useAuth();
   const authSchema = z.object({
-    email: z
-      .string()
-      .email("Invalid email address")
-      .min(1, "Email is required"),
+    email: z.string().email('Invalid email address').min(1, 'Email is required'),
   });
 
   const handleResetPassword = async (values: FormikValues) => {
@@ -26,30 +22,29 @@ export default function ResetPasswordForm() {
       }
 
       toaster.create({
-        title: "Success",
-        description: "Check your email for a link to reset your password.",
-        type: "success",
+        title: 'Success',
+        description: 'Check your email for a link to reset your password.',
+        type: 'success',
         duration: 2500,
       });
     } catch (error) {
       const err = error as Error;
       toaster.create({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        type: "error",
+        type: 'error',
         duration: 2500,
       });
-      console.error("Authentication error:", error);
     }
   };
 
   return (
     <>
       <Formik<{ email: string; password: string }>
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: '', password: '' }}
         initialErrors={{
-          email: "Email is required",
-          password: "Password is required",
+          email: 'Email is required',
+          password: 'Password is required',
         }}
         validate={withZodSchema(authSchema)}
         onSubmit={(values, { setSubmitting }) => {
@@ -57,19 +52,11 @@ export default function ResetPasswordForm() {
           setSubmitting(false);
         }}
       >
-        {({
-          isValid,
-          isSubmitting,
-          touched,
-          errors,
-          values,
-          handleChange,
-          handleBlur,
-        }) => (
+        {({ isValid, isSubmitting, touched, errors, values, handleChange, handleBlur }) => (
           <Form
             style={{
-              width: "100vw",
-              maxWidth: "25em",
+              width: '100vw',
+              maxWidth: '25em',
             }}
           >
             <VStack gap={2}>
@@ -87,18 +74,8 @@ export default function ResetPasswordForm() {
                 errors={errors.email}
               />
 
-              <Flex
-                marginTop={2}
-                gap={4}
-                flexDirection="row"
-                justifyContent="space-between"
-              >
-                <Button
-                  type="submit"
-                  size={"sm"}
-                  loading={isSubmitting}
-                  disabled={!isValid}
-                >
+              <Flex marginTop={2} gap={4} flexDirection="row" justifyContent="space-between">
+                <Button type="submit" size={'sm'} loading={isSubmitting} disabled={!isValid}>
                   Reset Password
                 </Button>
               </Flex>
@@ -107,12 +84,7 @@ export default function ResetPasswordForm() {
         )}
       </Formik>
 
-      <NavLink
-        href="/auth/login"
-        asButton
-        buttonProps={{ variant: "plain" }}
-        marginTop={4}
-      >
+      <NavLink href="/auth/login" asButton buttonProps={{ variant: 'plain' }} marginTop={4}>
         Back to Login
       </NavLink>
     </>

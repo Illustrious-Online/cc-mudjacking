@@ -1,76 +1,65 @@
-"use client";
+'use client';
 
-import AuthGuard from "@/components/ui/auth-guard";
-import NavLink from "@/components/ui/nav-link";
-import Wrapper from "@/components/ui/wrapper";
 import {
   Box,
-  Button,
   Card,
-  CardBody,
   Container,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Icon,
   Image,
-  Link,
   SimpleGrid,
   Text,
   VStack,
-} from "@chakra-ui/react";
-import {
-  FaBuilding,
-  FaClock,
-  FaHome,
-  FaPhone,
-  FaShieldAlt,
-  FaTools,
-} from "react-icons/fa";
+} from '@chakra-ui/react';
+import { FaBuilding, FaClock, FaHome, FaPhone, FaShieldAlt, FaTools } from 'react-icons/fa';
+import NavLink from '@/components/ui/nav-link';
+import Wrapper from '@/components/ui/wrapper';
 
-export default function LoginPage() {
+export default function HomePage() {
   const services = [
     {
       icon: FaHome,
-      title: "Residential Mudjacking",
+      title: 'Residential Mudjacking',
       description:
-        "Lift sunken driveways, sidewalks, patios, and garage floors with precision and care.",
-      features: ["Driveways & Walkways", "Patio & Pool Decks", "Garage Floors"],
+        'Lift sunken driveways, sidewalks, patios, and garage floors with precision and care.',
+      features: ['Driveways & Walkways', 'Patio & Pool Decks', 'Garage Floors'],
     },
     {
       icon: FaBuilding,
-      title: "Commercial Services",
+      title: 'Commercial Services',
       description:
-        "Professional concrete lifting for businesses, warehouses, and commercial properties.",
-      features: ["Warehouse Floors", "Parking Lots", "Loading Docks"],
+        'Professional concrete lifting for businesses, warehouses, and commercial properties.',
+      features: ['Warehouse Floors', 'Parking Lots', 'Loading Docks'],
     },
     {
       icon: FaTools,
-      title: "Foundation Repair",
+      title: 'Foundation Repair',
       description:
-        "Comprehensive foundation stabilization and repair services for lasting results.",
-      features: ["Slab Jacking", "Void Filling", "Settlement Issues"],
+        'Comprehensive foundation stabilization and repair services for lasting results.',
+      features: ['Slab Jacking', 'Void Filling', 'Settlement Issues'],
     },
   ];
 
   const beforeAfterImages = [
     {
-      src: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      title: "BEFORE: Sunken Driveway",
-      description: "Unsafe settlement causing trip hazards",
-      type: "before",
+      src: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+      title: 'BEFORE: Sunken Driveway',
+      description: 'Unsafe settlement causing trip hazards',
+      type: 'before',
     },
     {
-      src: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      title: "AFTER: Level & Safe",
-      description: "Professional mudjacking restoration",
-      type: "after",
+      src: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+      title: 'AFTER: Level & Safe',
+      description: 'Professional mudjacking restoration',
+      type: 'after',
     },
     {
-      src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      title: "COMPLETED: Foundation Fixed",
-      description: "Permanent solution with warranty",
-      type: "after",
+      src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+      title: 'COMPLETED: Foundation Fixed',
+      description: 'Permanent solution with warranty',
+      type: 'after',
     },
   ];
 
@@ -85,22 +74,22 @@ export default function LoginPage() {
         gradientTo="brand.700"
       >
         <Container maxW="7xl">
-          <Flex width="full" direction={{ base: "column", md: "row" }}>
+          <Flex width="full" direction={{ base: 'column', md: 'row' }}>
             <VStack px={12} justifyContent="center">
               <Heading as="h1" size="2xl" fontWeight="bold" color="brand.200">
                 Professional Mudjacking & Concrete Lifting Services
               </Heading>
               <Text fontSize="xl" color="brand.50">
-                Fast, affordable, and permanent solutions for sunken concrete.
-                Trusted by homeowners for over 15 years.
+                Fast, affordable, and permanent solutions for sunken concrete. Trusted by homeowners
+                for over 15 years.
               </Text>
               <HStack gap={4} flexWrap="wrap">
                 <NavLink
                   href="/contact"
                   buttonProps={{
-                    size: "lg",
-                    variant: "solid",
-                    colorScheme: "white",
+                    size: 'lg',
+                    variant: 'solid',
+                    colorScheme: 'white',
                   }}
                 >
                   Get Free Estimate
@@ -108,9 +97,9 @@ export default function LoginPage() {
                 <NavLink
                   href="tel:555-123-4567"
                   buttonProps={{
-                    size: "lg",
-                    variant: "outline",
-                    colorScheme: "white",
+                    size: 'lg',
+                    variant: 'outline',
+                    colorScheme: 'white',
                   }}
                 >
                   <FaPhone /> Call (555) 123-4567
@@ -151,8 +140,8 @@ export default function LoginPage() {
                 Our Professional Services
               </Heading>
               <Text fontSize="lg" color="gray.500" maxW="2xl">
-                We specialize in concrete lifting and foundation repair using
-                state-of-the-art mudjacking techniques.
+                We specialize in concrete lifting and foundation repair using state-of-the-art
+                mudjacking techniques.
               </Text>
             </VStack>
 
@@ -161,7 +150,7 @@ export default function LoginPage() {
                 <Card.Root
                   key={`service-${service.title}`}
                   shadow="lg"
-                  _hover={{ shadow: "xl" }}
+                  _hover={{ shadow: 'xl' }}
                   transition="all 0.2s"
                 >
                   <Card.Body>
@@ -181,12 +170,7 @@ export default function LoginPage() {
                         {service.title}
                       </Heading>
                       <Text color="gray.500">{service.description}</Text>
-                      <VStack
-                        align="start"
-                        gap={1}
-                        fontSize="sm"
-                        color="gray.500"
-                      >
+                      <VStack align="start" gap={1} fontSize="sm" color="gray.500">
                         {service.features.map((feature) => (
                           <Text key={feature}>• {feature}</Text>
                         ))}
@@ -204,10 +188,7 @@ export default function LoginPage() {
               </Heading>
               <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} w="full">
                 {beforeAfterImages.map((image) => (
-                  <Card.Root
-                    key={`before-after-${image.src}`}
-                    overflow="hidden"
-                  >
+                  <Card.Root key={`before-after-${image.src}`} overflow="hidden">
                     <Image
                       src={image.src}
                       alt={image.description}
@@ -219,9 +200,7 @@ export default function LoginPage() {
                       <Heading
                         as="h4"
                         size="sm"
-                        color={
-                          image.type === "before" ? "red.600" : "green.600"
-                        }
+                        color={image.type === 'before' ? 'red.600' : 'green.600'}
                         mb={2}
                       >
                         {image.title}
@@ -238,9 +217,9 @@ export default function LoginPage() {
             <NavLink
               href="/contact"
               buttonProps={{
-                size: "lg",
-                variant: "solid",
-                colorScheme: "brand",
+                size: 'lg',
+                variant: 'solid',
+                colorScheme: 'brand',
               }}
             >
               Get Your Free Estimate Today

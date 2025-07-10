@@ -8,11 +8,11 @@ vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
 }));
 
-vi.mock("@/context/AuthContext", () => ({
+vi.mock("@/contexts/AuthContext", () => ({
   useAuth: vi.fn(),
 }));
 
-vi.mock("@/loader", () => ({
+vi.mock("@/components/ui/loader", () => ({
   FullPageSkeletonLoader: () => <div data-testid="skeleton-loader" />,
 }));
 
@@ -24,8 +24,8 @@ describe("AuthGuard", () => {
     (useRouter as Mock).mockReturnValue({ push: mockPush });
   });
 
-  it("renders the skeleton loader when loading is true", () => {
-    (useAuth as Mock).mockReturnValue({ user: null, loading: true });
+  it("renders the skeleton loader when isLoading is true", () => {
+    (useAuth as Mock).mockReturnValue({ user: null, isLoading: true });
 
     render(
       <AuthGuard>
@@ -36,8 +36,20 @@ describe("AuthGuard", () => {
     expect(screen.getByTestId("skeleton-loader")).toBeInTheDocument();
   });
 
-  it("renders children if user is authenticated and loading is false", () => {
-    (useAuth as Mock).mockReturnValue({ user: { id: "123" }, loading: false });
+  it("renders children if user is authenticated and isLoading is false", () => {
+    (useAuth as Mock).mockReturnValue({ user: { id: "123" }, isLoading: false });
+
+    render(
+      <AuthGuard>
+        <div>Protected Content</div>
+      </AuthGuard>,
+    );
+
+    expect(screen.getByText("Protected Content")).toBeInTheDocument();
+  });
+
+  it("renders children if user is null but isLoading is false", () => {
+    (useAuth as Mock).mockReturnValue({ user: null, isLoading: false });
 
     render(
       <AuthGuard>

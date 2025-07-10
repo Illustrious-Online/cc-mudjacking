@@ -14,28 +14,42 @@ interface NavLinkProps extends ChakraLinkProps {
   children: React.ReactNode;
 }
 
+/**
+ * NavLink renders a Chakra <Link> or <Button> styled link using Next.js routing.
+ *
+ * - If asButton or buttonProps is provided, it renders an <a> styled as a button (not a <button>),
+ *   due to Next.js <Link> always rendering an anchor.
+ * - If neither is provided, it renders a standard <a>.
+ *
+ * If you need a true <button> for navigation, use a regular <Button> and handle navigation with router.push.
+ */
 const NavLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, NavLinkProps>(
   ({ href, asButton = false, buttonProps, children, ...rest }, ref) => {
-    if (asButton) {
+    const shouldRenderAsButton = asButton || buttonProps;
+
+    if (shouldRenderAsButton) {
       return (
-        <NextLink href={href} passHref legacyBehavior>
-          <Button
-            as="a"
-            ref={ref as React.Ref<HTMLButtonElement>}
-            {...buttonProps}
-          >
-            {children}
-          </Button>
-        </NextLink>
+        <Button
+          as={NextLink}
+          href={href}
+          ref={ref as React.Ref<HTMLButtonElement>}
+          {...(buttonProps as any)}
+          {...rest}
+        >
+          {children}
+        </Button>
       );
     }
 
     return (
-      <NextLink href={href} passHref legacyBehavior>
-        <ChakraLink ref={ref as React.Ref<HTMLAnchorElement>} {...rest}>
-          {children}
-        </ChakraLink>
-      </NextLink>
+      <ChakraLink
+        as={NextLink}
+        href={href}
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        {...rest}
+      >
+        {children}
+      </ChakraLink>
     );
   },
 );

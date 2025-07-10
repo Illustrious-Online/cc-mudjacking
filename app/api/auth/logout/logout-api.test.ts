@@ -1,21 +1,20 @@
-import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
-import { type Mock, describe, expect, it } from "vitest";
-import { vi } from "vitest";
-import { POST } from "./route";
+import { NextResponse } from 'next/server';
+import { describe, expect, it, type Mock, vi } from 'vitest';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { POST } from './route';
 
-vi.mock("@/lib/supabase/server", () => ({
+vi.mock('@/lib/supabase/server', () => ({
   createServerSupabaseClient: vi.fn(),
 }));
 
-vi.mock("next/server", () => ({
+vi.mock('next/server', () => ({
   NextResponse: {
     redirect: vi.fn(),
   },
 }));
 
-describe("POST /api/auth/logout", () => {
-  it("should sign out the user and redirect to the home page", async () => {
+describe('POST /api/auth/logout', () => {
+  it('should sign out the user and redirect to the home page', async () => {
     const mockSignOut = vi.fn();
     const mockSupabase = {
       auth: {
@@ -33,7 +32,7 @@ describe("POST /api/auth/logout", () => {
     expect(createServerSupabaseClient).toHaveBeenCalled();
     expect(mockSignOut).toHaveBeenCalled();
     expect(NextResponse.redirect).toHaveBeenCalledWith(
-      new URL("/", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+      new URL('/', process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
     );
   });
 });

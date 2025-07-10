@@ -1,26 +1,22 @@
-"use client";
+'use client';
 
-import InputControl from "@/components/ui/input-control";
-import NavLink from "@/components/ui/nav-link";
-import { toaster } from "@/components/ui/toaster";
-import { useAuth } from "@/contexts/AuthContext";
-import { Flex, IconButton, VStack } from "@chakra-ui/react";
-import { Button, Text } from "@chakra-ui/react";
-import { Form, Formik, type FormikValues } from "formik";
-import { withZodSchema } from "formik-validator-zod";
-import { useRouter } from "next/navigation";
-import { FaDiscord } from "react-icons/fa";
-import { z } from "zod";
+import { Button, Flex, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Form, Formik, type FormikValues } from 'formik';
+import { withZodSchema } from 'formik-validator-zod';
+import { useRouter } from 'next/navigation';
+import { FaDiscord } from 'react-icons/fa';
+import { z } from 'zod';
+import InputControl from '@/components/ui/input-control';
+import NavLink from '@/components/ui/nav-link';
+import { toaster } from '@/components/ui/toaster';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginForm() {
-  const { signIn, signInWithOAuth } = useAuth();
+  const { signIn, signInWithOauth } = useAuth();
   const router = useRouter();
   const authSchema = z.object({
-    email: z
-      .string()
-      .email("Invalid email address")
-      .min(1, "Email is required"),
-    password: z.string().min(1, "Password is required"),
+    email: z.string().email('Invalid email address').min(1, 'Email is required'),
+    password: z.string().min(1, 'Password is required'),
   });
 
   const handleEmailAuth = async (values: FormikValues) => {
@@ -31,43 +27,39 @@ export default function LoginForm() {
         throw error;
       }
 
-      router.push("/");
+      router.push('/');
     } catch (error) {
       const err = error as Error;
       toaster.create({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        type: "error",
+        type: 'error',
         duration: 2500,
       });
-      console.error("Authentication error:", error);
     }
   };
 
-  const handleOAuthSignIn = async (
-    provider: "google" | "github" | "facebook" | "discord",
-  ) => {
+  const handleOauthSignIn = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
     try {
-      await signInWithOAuth(provider);
+      await signInWithOauth(provider);
     } catch (error) {
       const err = error as Error;
       toaster.create({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        type: "error",
+        type: 'error',
         duration: 2500,
       });
-      console.error("OAuth error:", error);
     }
   };
 
   return (
     <>
       <Formik<{ email: string; password: string }>
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: '', password: '' }}
         initialErrors={{
-          email: "Email is required",
-          password: "Password is required",
+          email: 'Email is required',
+          password: 'Password is required',
         }}
         validate={withZodSchema(authSchema)}
         onSubmit={(values, { setSubmitting }) => {
@@ -75,19 +67,11 @@ export default function LoginForm() {
           setSubmitting(false);
         }}
       >
-        {({
-          isValid,
-          isSubmitting,
-          touched,
-          errors,
-          values,
-          handleChange,
-          handleBlur,
-        }) => (
+        {({ isValid, isSubmitting, touched, errors, values, handleChange, handleBlur }) => (
           <Form
             style={{
-              width: "100vw",
-              maxWidth: "25em",
+              width: '100vw',
+              maxWidth: '25em',
             }}
           >
             <VStack gap={2}>
@@ -118,35 +102,21 @@ export default function LoginForm() {
                 touched={touched.password}
                 errors={errors.password}
               />
-              <NavLink
-                href="/auth/reset-password"
-                alignSelf={"flex-end"}
-                fontSize="xs"
-              >
+              <NavLink href="/auth/reset-password" alignSelf={'flex-end'} fontSize="xs">
                 <Text fontSize="sm" textAlign="right">
                   Forgot Password?
                 </Text>
               </NavLink>
 
-              <Flex
-                marginTop={2}
-                gap={4}
-                flexDirection="row"
-                justifyContent="space-between"
-              >
-                <Button
-                  type="submit"
-                  size={"sm"}
-                  loading={isSubmitting}
-                  disabled={!isValid}
-                >
+              <Flex marginTop={2} gap={4} flexDirection="row" justifyContent="space-between">
+                <Button type="submit" size={'sm'} loading={isSubmitting} disabled={!isValid}>
                   Login
                 </Button>
 
                 <NavLink
                   href="/auth/register"
                   asButton
-                  buttonProps={{ variant: "ghost", size: "sm" }}
+                  buttonProps={{ variant: 'ghost', size: 'sm' }}
                 >
                   Don't have an account?
                 </NavLink>
@@ -163,7 +133,7 @@ export default function LoginForm() {
         marginTop={4}
         variant="outline"
         aria-label="Discord"
-        onClick={() => handleOAuthSignIn("discord")}
+        onClick={() => handleOauthSignIn('discord')}
       >
         <FaDiscord />
       </IconButton>

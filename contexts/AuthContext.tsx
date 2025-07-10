@@ -11,7 +11,7 @@ type AuthContextType = {
   isLoading: boolean
   signUp: (email: string, password: string, phone?: string) => Promise<{ error: Error | null }>
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>
-  signInWithOAuth: (provider: 'google' | 'github' | 'facebook' | 'discord') => Promise<void>
+  signInWithOauth: (provider: 'google' | 'github' | 'facebook' | 'discord') => Promise<void>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<{ error: Error | null }>
   updatePassword: (password: string) => Promise<{ error: Error | null }>
@@ -27,9 +27,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = createClientSupabaseClient()
 
   useEffect(() => {
-    const { pathname } = window.location
-    const isAuthPage = pathname.startsWith('/auth')
-    const isApiRoute = pathname.startsWith('/api')
     const fetchSession = async () => {
       setIsLoading(true)
       const { data: { session } } = await supabase.auth.getSession()
@@ -79,7 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error }
   }
 
-  const signInWithOAuth = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
+  const signInWithOauth = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
     await supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -115,7 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     signUp,
     signIn,
-    signInWithOAuth,
+    signInWithOauth,
     signOut,
     resetPassword,
     updatePassword,

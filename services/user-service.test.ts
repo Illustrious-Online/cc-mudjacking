@@ -1,123 +1,360 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { UserService } from "./user-service";
+import type { UserDetails } from "@/types/auth";
 
-global.fetch = vi.fn() as unknown as typeof fetch;
+// Mock fetch globally
+global.fetch = vi.fn();
+
+// Mock console.error to avoid noise in tests
+const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
 describe("UserService", () => {
   let userService: UserService;
+  let mockFetch: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
-    userService = new UserService();
     vi.clearAllMocks();
+    vi.resetModules();
+    
+    // Reset environment variables
+    delete process.env.ELYSIA_API_URL;
+    
+    userService = new UserService();
+    mockFetch = fetch as ReturnType<typeof vi.fn>;
+  });
+
+  afterAll(() => {
+    mockConsoleError.mockRestore();
+  });
+
+  describe("constructor", () => {
+    it("should use default API URL when ELYSIA_API_URL is not set", () => {
+      delete process.env.ELYSIA_API_URL;
+      const service = new UserService();
+      expect(service.apiUrl).toBe("http://localhost:8000");
+    });
+
+    it("should use environment variable when ELYSIA_API_URL is set", () => {
+      process.env.ELYSIA_API_URL = "https://api.example.com";
+      const service = new UserService();
+      expect(service.apiUrl).toBe("https://api.example.com");
+    });
   });
 
   describe("createUser", () => {
-    it("should create a user and return user details", async () => {
-      const mockUser = { id: "1", email: "test@example.com" };
-      const mockResponse = {
-        id: "1",
-        email: "test@example.com",
-        firstName: "Test",
-      };
+    const mockUserData = {
+      id: "user-123",
+      email: "test@example.com",
+      firstName: "John",
+      lastName: "Doe",
+      avatarUrl: "https://example.com/avatar.jpg",
+    };
 
-      vi.mocked(fetch).mockResolvedValueOnce({
+    const mockUserDetails: UserDetails = {
+      id: "user-123",
+      identifier: "user-123",
+      email: "test@example.com",
+      firstName: "John",
+      lastName: "Doe",
+      avatarUrl: "https://example.com/avatar.jpg",
+      role: "user",
+      superAdmin: false,
+    };
+
+    it("should successfully create a user", async () => {
+      mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: async () => mockResponse,
-      } as Response);
-
-      const result = await userService.createUser(mockUser);
-
-      expect(fetch).toHaveBeenCalledWith(`${userService.apiUrl}/users`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(mockUser),
+        json: vi.fn().mockResolvedValue(mockUserDetails),
       });
-      expect(result).toEqual(mockResponse);
+
+      const result = await userService.createUser(mockUserData);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "http://localhost:8000/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(mockUserData),
+        }
+      );
+      expect(result).toEqual(mockUserDetails);
     });
 
-    it("should return null if the API call fails", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({ ok: false } as Response);
-
-      const result = await userService.createUser({
-        id: "1",
+    it("should handle partial user data", async () => {
+      const partialUserData = {
+        id: "user-123",
         email: "test@example.com",
+      };
+
+      const partialUserDetails: UserDetails = {
+        id: "user-123",
+        identifier: "user-123",
+        email: "test@example.com",
+        role: "user",
+        superAdmin: false,
+      };
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(partialUserDetails),
       });
 
+      const result = await userService.createUser(partialUserData);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "http://localhost:8000/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(partialUserData),
+        }
+      );
+      expect(result).toEqual(partialUserDetails);
+    });
+
+    it("should return null when API returns non-ok response", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: "Bad Request",
+      });
+
+      const result = await userService.createUser(mockUserData);
+
       expect(result).toBeNull();
+      expect(mockConsoleError).toHaveBeenCalledWith(
+        "Error creating user:",
+        expect.any(Error)
+      );
+    });
+
+    it("should return null when fetch throws an error", async () => {
+      const networkError = new Error("Network error");
+      mockFetch.mockRejectedValueOnce(networkError);
+
+      const result = await userService.createUser(mockUserData);
+
+      expect(result).toBeNull();
+      expect(mockConsoleError).toHaveBeenCalledWith(
+        "Error creating user:",
+        networkError
+      );
+    });
+
+    it("should use custom API URL when configured", async () => {
+      process.env.ELYSIA_API_URL = "https://api.example.com";
+      const customService = new UserService();
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockUserDetails),
+      });
+
+      await customService.createUser(mockUserData);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.example.com/users",
+        expect.any(Object)
+      );
     });
   });
 
   describe("getUser", () => {
-    it("should fetch a user by ID and return user details", async () => {
-      const mockResponse = {
-        id: "1",
-        email: "test@example.com",
-        firstName: "Test",
-      };
+    const mockUserDetails: UserDetails = {
+      id: "user-123",
+      identifier: "user-123",
+      email: "test@example.com",
+      firstName: "John",
+      lastName: "Doe",
+      avatarUrl: "https://example.com/avatar.jpg",
+      role: "user",
+      superAdmin: false,
+    };
 
-      vi.mocked(fetch).mockResolvedValueOnce({
+    it("should successfully fetch user by ID", async () => {
+      mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: async () => mockResponse,
-      } as Response);
+        json: vi.fn().mockResolvedValue(mockUserDetails),
+      });
 
-      const result = await userService.getUser("1");
+      const result = await userService.getUser("user-123");
 
-      expect(fetch).toHaveBeenCalledWith(`${userService.apiUrl}/users/1`);
-      expect(result).toEqual(mockResponse);
+      expect(mockFetch).toHaveBeenCalledWith("http://localhost:8000/user/user-123");
+      expect(result).toEqual(mockUserDetails);
     });
 
-    it("should return null if the user is not found (404)", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({
+    it("should successfully fetch user with custom parameter", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockUserDetails),
+      });
+
+      const result = await userService.getUser("test@example.com", "email");
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "http://localhost:8000/user/test@example.com?by=email"
+      );
+      expect(result).toEqual(mockUserDetails);
+    });
+
+    it("should return null when user is not found (404)", async () => {
+      mockFetch.mockResolvedValueOnce({
         ok: false,
         status: 404,
-      } as Response);
+        statusText: "Not Found",
+      });
 
-      const result = await userService.getUser("1");
+      const result = await userService.getUser("nonexistent-user");
 
       expect(result).toBeNull();
+      expect(mockConsoleError).not.toHaveBeenCalled();
     });
 
-    it("should return null if the API call fails", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({ ok: false } as Response);
+    it("should return null when API returns other error", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        statusText: "Internal Server Error",
+      });
 
-      const result = await userService.getUser("1");
+      const result = await userService.getUser("user-123");
 
       expect(result).toBeNull();
+      expect(mockConsoleError).toHaveBeenCalledWith(
+        "Error fetching user:",
+        expect.any(Error)
+      );
+    });
+
+    it("should return null when fetch throws an error", async () => {
+      const networkError = new Error("Network error");
+      mockFetch.mockRejectedValueOnce(networkError);
+
+      const result = await userService.getUser("user-123");
+
+      expect(result).toBeNull();
+      expect(mockConsoleError).toHaveBeenCalledWith(
+        "Error fetching user:",
+        networkError
+      );
+    });
+
+    it("should use custom API URL when configured", async () => {
+      process.env.ELYSIA_API_URL = "https://api.example.com";
+      const customService = new UserService();
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockUserDetails),
+      });
+
+      await customService.getUser("user-123");
+
+      expect(mockFetch).toHaveBeenCalledWith("https://api.example.com/user/user-123");
     });
   });
 
   describe("updateUser", () => {
-    it("should update a user and return updated user details", async () => {
-      const mockUserData = { firstName: "Updated" };
-      const mockResponse = {
-        id: "1",
-        email: "test@example.com",
-        firstName: "Updated",
-      };
+    const mockUserDetails: UserDetails = {
+      id: "user-123",
+      identifier: "user-123",
+      email: "test@example.com",
+      firstName: "John",
+      lastName: "Doe",
+      avatarUrl: "https://example.com/avatar.jpg",
+      role: "user",
+      superAdmin: false,
+    };
 
-      vi.mocked(fetch).mockResolvedValueOnce({
+    const updateData = {
+      firstName: "Jane",
+      lastName: "Smith",
+    };
+
+    it("should successfully update user", async () => {
+      const updatedUserDetails = { ...mockUserDetails, ...updateData };
+      
+      mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: async () => mockResponse,
-      } as Response);
-
-      const result = await userService.updateUser("1", mockUserData);
-
-      expect(fetch).toHaveBeenCalledWith(`${userService.apiUrl}/users/1`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(mockUserData),
+        json: vi.fn().mockResolvedValue(updatedUserDetails),
       });
-      expect(result).toEqual(mockResponse);
+
+      const result = await userService.updateUser("user-123", updateData);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "http://localhost:8000/users/user-123",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData),
+        }
+      );
+      expect(result).toEqual(updatedUserDetails);
     });
 
-    it("should return null if the API call fails", async () => {
-      vi.mocked(fetch).mockResolvedValueOnce({ ok: false } as Response);
-
-      const result = await userService.updateUser("1", {
-        firstName: "Updated",
+    it("should handle empty update data", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockUserDetails),
       });
 
-      expect(result).toBeNull();
+      const result = await userService.updateUser("user-123", {});
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "http://localhost:8000/users/user-123",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        }
+      );
+      expect(result).toEqual(mockUserDetails);
+    });
+
+    it("should throw error when API returns non-ok response", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: "Bad Request",
+      });
+
+      await expect(userService.updateUser("user-123", updateData)).rejects.toThrow(
+        "Failed to update user"
+      );
+    });
+
+    it("should throw error when fetch throws an error", async () => {
+      const networkError = new Error("Network error");
+      mockFetch.mockRejectedValueOnce(networkError);
+
+      await expect(userService.updateUser("user-123", updateData)).rejects.toThrow(
+        "Network error"
+      );
+    });
+
+    it("should use custom API URL when configured", async () => {
+      process.env.ELYSIA_API_URL = "https://api.example.com";
+      const customService = new UserService();
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: vi.fn().mockResolvedValue(mockUserDetails),
+      });
+
+      await customService.updateUser("user-123", updateData);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        "https://api.example.com/users/user-123",
+        expect.any(Object)
+      );
     });
   });
-});
+}); 

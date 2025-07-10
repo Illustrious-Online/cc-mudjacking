@@ -29,6 +29,7 @@ export class UserService {
 
       return await response.json();
     } catch (error) {
+      // biome-ignore lint/suspicious/noConsole: Desire to see logging
       console.error("Error creating user:", error);
       return null;
     }
