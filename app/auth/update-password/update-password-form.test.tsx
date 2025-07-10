@@ -348,7 +348,13 @@ describe('UpdatePasswordForm', () => {
     // Should still render the form even if user update fails
     expect(screen.getByPlaceholderText('Enter your password')).toBeInTheDocument();
 
-    // Wait a bit to let any async operations complete
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    // Wait for the useEffect to complete and handle the error
+    await waitFor(
+      () => {
+        // The form should still be rendered even if the user update fails
+        expect(screen.getByPlaceholderText('Enter your password')).toBeInTheDocument();
+      },
+      { timeout: 1000 }
+    );
   });
 });

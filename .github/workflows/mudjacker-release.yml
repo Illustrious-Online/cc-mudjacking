@@ -30,7 +30,7 @@ jobs:
         run: |
           spaces-cli down $SPACE_URL/cc-mudjacking/local.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/instrumentation.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-          spaces-cli down $SPACE_URL/cc-mudjacking/sentry.client.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/instrumentation-client.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/cc-mudjacking/sentry.edge.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/cc-mudjacking/sentry.server.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Install Dependencies
@@ -74,14 +74,14 @@ jobs:
       - name: Build & Push Docker image with latest tag
         run: |
           echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-          docker build -t ${{ secrets.REGISTRY_URL }}:latest .
-          docker push ${{ secrets.REGISTRY_URL }}:latest
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/cc-mudjacking:latest .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/cc-mudjacking:latest
       - name: Push versioned Docker image to registry, if updated
         if: env.NEXT_VERSION != env.CURRENT_VERSION
         run: |
           echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-          docker build -t ${{ secrets.REGISTRY_URL }}:${{ env.NEXT_VERSION }} .
-          docker push ${{ secrets.REGISTRY_URL }}:${{ env.NEXT_VERSION }}
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/cc-mudjacking:${{ env.NEXT_VERSION }} .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/cc-mudjacking:${{ env.NEXT_VERSION }}
       - name: Push argo-cd application updates, if updated
         if: env.NEXT_VERSION != env.CURRENT_VERSION
         run: |
