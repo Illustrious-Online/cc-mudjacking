@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Flex, VStack } from '@chakra-ui/react';
 import { Form, Formik, type FormikValues } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
