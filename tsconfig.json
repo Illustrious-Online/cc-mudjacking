@@ -32,7 +32,4 @@
     "setupTests.ts"
   ],
   "exclude": ["node_modules"],
-  "ts-node": {
-    "esm": true
-  }
 }

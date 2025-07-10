@@ -31,6 +31,7 @@ yarn-error.log*
 
 **/sentry.*.ts
 **/instrumentation.ts
+**/instrumentation-client.ts
 
 # Sentry Config File
 .env.sentry-build-plugin
