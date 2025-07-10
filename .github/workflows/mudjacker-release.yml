@@ -60,6 +60,8 @@ jobs:
       - name: Compare versions
         id: compare
         run: |
+          export NPM_TOKEN=${{ env.NEXT_VERSION }}
+          echo "NPM_TOKEN=${NPM_TOKEN}" >> $GITHUB_ENV
           export CURRENT_VERSION=$(jq -r '.version' package.json)
           echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
           export NEXT_VERSION=$(bunx semantic-release --dry-run | grep 'The next release version is' | awk '{print $NF}')
