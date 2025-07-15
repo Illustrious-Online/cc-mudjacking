@@ -57,11 +57,9 @@ describe('Home Page', () => {
 
   it('renders service cards', () => {
     renderHome();
-    expect(screen.getByText(/Residential Mudjacking/i)).toBeInTheDocument();
-    expect(screen.getByText(/Commercial Services/i)).toBeInTheDocument();
-    // 'Foundation Repair' appears in both a heading and a paragraph, so use getAllByText
-    const foundationRepairMatches = screen.getAllByText(/Foundation Repair/i);
-    expect(foundationRepairMatches.length).toBeGreaterThan(0);
+    expect(screen.getByText(/Residential/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Environmentally Friendly/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Foundation/i).length).toBeGreaterThan(0);
   });
 
   it('renders call-to-action buttons', () => {
@@ -73,6 +71,6 @@ describe('Home Page', () => {
   it('renders trust indicators', () => {
     renderHome();
     expect(screen.getByText(/Fully Licensed & Insured/i)).toBeInTheDocument();
-    expect(screen.getByText(/Same Day Service/i)).toBeInTheDocument();
+    expect(screen.getByText(/Same Day Response/i)).toBeInTheDocument();
   });
 });

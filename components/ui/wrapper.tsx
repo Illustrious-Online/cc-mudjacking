@@ -10,6 +10,7 @@ import { ColorModeButton, useColorMode } from "./color-mode";
 import { Toaster, toaster } from "./toaster";
 import { useRouter } from "next/navigation";
 import AuthGuard from "./auth-guard";
+import Navigation from "./navigation";
 
 interface LayoutProps {
   children: ReactNode;
@@ -37,15 +38,18 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
     <AuthGuard>
       <Box height="100vh" display="flex" flexDirection="column">
         <Toaster />
-        <Flex as="nav" padding={4} color="white" align="center">
-          <Image borderRadius="md" src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} alt="Logo" width={"6rem"} />
+        <Flex as="header" padding={4} color="white" align="center">
+          <Image borderRadius="md" src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} alt="Logo" width={"6rem"} mr={6} />
+          <Navigation />
           <Spacer />
-          {session && (
-            <Button variant={"ghost"} onClick={handleSignOut}>
-              Log Out
-            </Button>
-          )}
-          <ColorModeButton />
+          <Flex gap={4} align="center">
+            {session && (
+              <Button variant={"ghost"} onClick={handleSignOut}>
+                Log Out
+              </Button>
+            )}
+            <ColorModeButton />
+          </Flex>
         </Flex>
 
         <Box as="main" height="100%">

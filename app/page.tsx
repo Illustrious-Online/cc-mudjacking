@@ -21,21 +21,20 @@ export default function HomePage() {
   const services = [
     {
       icon: FaHome,
-      title: 'Residential Mudjacking',
+      title: 'Residential',
       description:
         'Lift sunken driveways, sidewalks, patios, and garage floors with precision and care.',
       features: ['Driveways & Walkways', 'Patio & Pool Decks', 'Garage Floors'],
     },
     {
       icon: FaBuilding,
-      title: 'Commercial Services',
-      description:
-        'Professional concrete lifting for businesses, warehouses, and commercial properties.',
-      features: ['Warehouse Floors', 'Parking Lots', 'Loading Docks'],
+      title: 'Environmentally Friendly',
+      description: 'We use the latest technology to lift concrete without harming the environment.',
+      features: ['No Chemicals', 'No Digging', 'No Destruction'],
     },
     {
       icon: FaTools,
-      title: 'Foundation Repair',
+      title: 'Foundation',
       description:
         'Comprehensive foundation stabilization and repair services for lasting results.',
       features: ['Slab Jacking', 'Void Filling', 'Settlement Issues'],
@@ -79,9 +78,9 @@ export default function HomePage() {
               <Heading as="h1" size="2xl" fontWeight="bold" color="brand.200">
                 Professional Mudjacking & Concrete Lifting Services
               </Heading>
-              <Text fontSize="xl" color="brand.50">
-                Fast, affordable, and permanent solutions for sunken concrete. Trusted by homeowners
-                for over 15 years.
+              <Text fontSize="xl" color="brand.50" textAlign="center">
+                Fast, affordable, and permanent solutions for sunken concrete. Trusted by
+                environmentally conscious homeowners.
               </Text>
               <HStack gap={4} flexWrap="wrap">
                 <NavLink
@@ -113,7 +112,7 @@ export default function HomePage() {
                 </HStack>
                 <HStack>
                   <Icon as={FaClock} />
-                  <Text>Same Day Service</Text>
+                  <Text>Same Day Response</Text>
                 </HStack>
               </HStack>
             </VStack>
@@ -139,9 +138,11 @@ export default function HomePage() {
               <Heading color="brand.500" as="h2" size="xl">
                 Our Professional Services
               </Heading>
-              <Text fontSize="lg" color="gray.500" maxW="2xl">
-                We specialize in concrete lifting and foundation repair using state-of-the-art
-                mudjacking techniques.
+              <Text fontSize="lg" color="gray.500" maxW="5xl">
+                We provide professional, personalized mudjacking and concrete leveling services
+                designed to restore your property safely and efficiently. Our environmentally
+                friendly methods ensure minimal disruption and lasting results, all delivered by a
+                licensed and insured team you can trust.
               </Text>
             </VStack>
 
@@ -183,9 +184,14 @@ export default function HomePage() {
 
             {/* Before & After Gallery */}
             <VStack gap={8} w="full">
-              <Heading as="h3" size="lg" textAlign="center">
-                Before & After Results
-              </Heading>
+              <VStack gap={4}>
+                <Heading as="h3" size="lg" textAlign="center">
+                  Before & After Results
+                </Heading>
+                <Text fontSize="md" color="gray.500" textAlign="center">
+                  See more examples of our work in our comprehensive gallery
+                </Text>
+              </VStack>
               <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} w="full">
                 {beforeAfterImages.map((image) => (
                   <Card.Root key={`before-after-${image.src}`} overflow="hidden">
@@ -212,6 +218,16 @@ export default function HomePage() {
                   </Card.Root>
                 ))}
               </SimpleGrid>
+              <NavLink
+                href="/gallery"
+                buttonProps={{
+                  size: 'md',
+                  variant: 'outline',
+                  colorScheme: 'brand',
+                }}
+              >
+                View Full Gallery
+              </NavLink>
             </VStack>
 
             <NavLink
