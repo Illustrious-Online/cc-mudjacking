@@ -139,7 +139,7 @@
         "noAssignInExpressions": "warn",
         "noClassAssign": "error",
         "noCompareNegZero": "error",
-        "noConsole": "warn",
+        "noConsole": "off",
         "noDebugger": "error",
         "noEmptyBlockStatements": "warn",
         "noVar": "error"
@@ -159,40 +159,6 @@
     }
   },
   "overrides": [
-    {
-      "includes": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
-      "linter": {
-        "rules": {
-          "style": {},
-          "suspicious": {
-            "noConsole": "off",
-            "noDebugger": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/*.config.ts", "**/*.config.js", "**/*.config.mjs"],
-      "linter": {
-        "rules": {
-          "style": {},
-          "suspicious": {
-            "noConsole": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/middleware.ts", "**/instrumentation*.ts"],
-      "linter": {
-        "rules": {
-          "style": {},
-          "suspicious": {
-            "noConsole": "off"
-          }
-        }
-      }
-    },
     {
       "includes": ["**/*.css", "**/*.scss", "**/*.sass"],
       "formatter": {
