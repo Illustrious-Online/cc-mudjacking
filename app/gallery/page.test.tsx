@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import GalleryPageComponent from './page';
 
 // Mock the components
@@ -11,12 +11,8 @@ vi.mock('@/app/components', () => ({
         <span>Commercial: {galleryData.commercial.length}</span>
         <span>Foundation: {galleryData.foundation.length}</span>
       </div>
-      <div data-testid="testimonials-count">
-        Testimonials: {testimonials.length}
-      </div>
-      <div data-testid="testimonials-enabled">
-        Enabled: {enableTestimonials ? 'true' : 'false'}
-      </div>
+      <div data-testid="testimonials-count">Testimonials: {testimonials.length}</div>
+      <div data-testid="testimonials-enabled">Enabled: {enableTestimonials ? 'true' : 'false'}</div>
       <div data-testid="sections">
         {sections.map((section: any, index: number) => (
           <div key={section.title} data-testid={`section-${index}`}>
@@ -75,4 +71,4 @@ describe('GalleryPageComponent', () => {
 
     expect(screen.getByTestId('section-0')).toBeInTheDocument();
   });
-}); 
+});

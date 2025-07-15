@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const contactSchema = z.object({
@@ -14,13 +14,13 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate the request body
     const validatedData = contactSchema.parse(body);
-    
+
     // Get the recipient email from environment variables
     const recipientEmail = process.env.CONTACT_EMAIL || 'info@ccmudjacking.com';
-    
+
     // For now, we'll just log the data and return success
     // In a real implementation, you would send an email here
     console.log('Contact form submission:', {
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     // - SendGrid
     // - Nodemailer with SMTP
     // - AWS SES
-    
+
     // Example with Resend (you would need to install @resend/node):
     /*
     import { Resend } from '@resend/node';
@@ -81,26 +81,20 @@ export async function POST(request: NextRequest) {
       });
     */
 
-    return NextResponse.json(
-      { message: 'Contact form submitted successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'Contact form submitted successfully' }, { status: 200 });
   } catch (error) {
     console.error('Contact form error:', error);
-    
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { 
+        {
           message: 'Validation error',
-          errors: error.errors 
+          errors: error.errors,
         },
         { status: 400 }
       );
     }
-    
-    return NextResponse.json(
-      { message: 'Internal server error' },
-      { status: 500 }
-    );
+
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
-} 
+}

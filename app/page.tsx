@@ -79,7 +79,7 @@ export default function HomePage() {
                 Professional Mudjacking & Concrete Lifting Services
               </Heading>
               <Text fontSize="xl" color="brand.50" textAlign="center">
-                Fast, affordable, and permanent solutions for sunken concrete. Trusted by 
+                Fast, affordable, and permanent solutions for sunken concrete. Trusted by
                 environmentally conscious homeowners.
               </Text>
               <HStack gap={4} flexWrap="wrap">
@@ -139,8 +139,10 @@ export default function HomePage() {
                 Our Professional Services
               </Heading>
               <Text fontSize="lg" color="gray.500" maxW="5xl">
-              We provide professional, personalized mudjacking and concrete leveling services designed to restore your property safely and efficiently. 
-              Our environmentally friendly methods ensure minimal disruption and lasting results, all delivered by a licensed and insured team you can trust.
+                We provide professional, personalized mudjacking and concrete leveling services
+                designed to restore your property safely and efficiently. Our environmentally
+                friendly methods ensure minimal disruption and lasting results, all delivered by a
+                licensed and insured team you can trust.
               </Text>
             </VStack>
 

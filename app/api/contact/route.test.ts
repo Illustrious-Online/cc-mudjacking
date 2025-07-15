@@ -1,6 +1,6 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { POST } from './route';
 import { NextRequest } from 'next/server';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { POST } from './route';
 
 // Mock console.log and console.error
 const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
@@ -212,4 +212,4 @@ describe('Contact API Route', () => {
     // Restore original environment variable
     process.env.CONTACT_EMAIL = originalEnv;
   });
-}); 
+});

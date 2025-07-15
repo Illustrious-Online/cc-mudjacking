@@ -7,19 +7,19 @@ import {
   Container,
   Field,
   Heading,
-  Input,
-  Textarea,
-  Text,
-  VStack,
   HStack,
   Icon,
+  Input,
+  Text,
+  Textarea,
+  VStack,
 } from '@chakra-ui/react';
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { Form, Formik, type FormikValues } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
+import { FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { z } from 'zod';
-import Wrapper from '@/components/ui/wrapper';
 import { toaster } from '@/components/ui/toaster';
+import Wrapper from '@/components/ui/wrapper';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -83,9 +83,8 @@ export default function ContactPage() {
                 Contact Us
               </Heading>
               <Text fontSize="lg" color="gray.500" maxW="3xl">
-                Get your free estimate today! Our team is ready to help you with all your 
-                concrete lifting and mudjacking needs. Fill out the form below or contact 
-                us directly.
+                Get your free estimate today! Our team is ready to help you with all your concrete
+                lifting and mudjacking needs. Fill out the form below or contact us directly.
               </Text>
             </VStack>
 
@@ -103,7 +102,15 @@ export default function ContactPage() {
                     validate={withZodSchema(contactSchema)}
                     onSubmit={handleSubmit}
                   >
-                    {({ isValid, isSubmitting, touched, errors, values, handleChange, handleBlur }) => (
+                    {({
+                      isValid,
+                      isSubmitting,
+                      touched,
+                      errors,
+                      values,
+                      handleChange,
+                      handleBlur,
+                    }) => (
                       <Form>
                         <VStack gap={6}>
                           {/* Contact Information */}
@@ -214,7 +221,9 @@ export default function ContactPage() {
                       <Icon as={FaPhone} color="brand.500" boxSize={6} />
                       <Text fontWeight="semibold">Call Us</Text>
                       <Text color="gray.500">(555) 123-4567</Text>
-                      <Text fontSize="sm" color="gray.400">Mon-Fri 8AM-6PM</Text>
+                      <Text fontSize="sm" color="gray.400">
+                        Mon-Fri 8AM-6PM
+                      </Text>
                     </VStack>
                   </Card.Body>
                 </Card.Root>
@@ -225,7 +234,9 @@ export default function ContactPage() {
                       <Icon as={FaEnvelope} color="brand.500" boxSize={6} />
                       <Text fontWeight="semibold">Email Us</Text>
                       <Text color="gray.500">info@ccmudjacking.com</Text>
-                      <Text fontSize="sm" color="gray.400">24/7 Response</Text>
+                      <Text fontSize="sm" color="gray.400">
+                        24/7 Response
+                      </Text>
                     </VStack>
                   </Card.Body>
                 </Card.Root>
@@ -236,7 +247,9 @@ export default function ContactPage() {
                       <Icon as={FaMapMarkerAlt} color="brand.500" boxSize={6} />
                       <Text fontWeight="semibold">Service Area</Text>
                       <Text color="gray.500">Greater Metro Area</Text>
-                      <Text fontSize="sm" color="gray.400">Free Estimates</Text>
+                      <Text fontSize="sm" color="gray.400">
+                        Free Estimates
+                      </Text>
                     </VStack>
                   </Card.Body>
                 </Card.Root>
@@ -247,4 +260,4 @@ export default function ContactPage() {
       </Box>
     </Wrapper>
   );
-} 
+}
