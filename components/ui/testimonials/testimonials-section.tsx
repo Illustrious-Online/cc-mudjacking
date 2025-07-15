@@ -6,7 +6,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Testimonial } from "../types";
+import type { Testimonial } from "../types";
 import TestimonialCard from './testimonial-card';
 import NavLink from '@/components/ui/nav-link';
 

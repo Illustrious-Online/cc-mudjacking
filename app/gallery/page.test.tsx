@@ -3,8 +3,8 @@ import { describe, expect, it, vi } from 'vitest';
 import GalleryPageComponent from './page';
 
 // Mock the components
-vi.mock('@/app/components', () => ({
-  GalleryPage: ({
+vi.mock('@/components/ui/gallery/gallery-page', () => ({
+  default: ({
     galleryData,
     testimonials,
     enableTestimonials,
@@ -31,9 +31,15 @@ vi.mock('@/app/components', () => ({
       </div>
     </div>
   ),
+}));
+
+vi.mock('@/components/ui/gallery/gallery-data', () => ({
   galleryData: {
     residential: [{ id: 1 }, { id: 2 }, { id: 3 }],
   },
+}));
+
+vi.mock('@/components/ui/testimonials/testimonials', () => ({
   testimonials: [
     { id: 1, name: 'Test 1' },
     { id: 2, name: 'Test 2' },

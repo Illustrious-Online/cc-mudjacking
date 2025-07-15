@@ -1,13 +1,9 @@
 import { IconType } from 'react-icons';
 import Wrapper from '@/components/ui/wrapper';
-import {
-  GalleryHero,
-  GallerySection,
-  TestimonialsSection,
-  type GalleryData,
-  type GalleryProject,
-  type Testimonial,
-} from '../../../app/components/index';
+import GalleryHero from './gallery-hero';
+import GallerySection from './gallery-section';
+import TestimonialsSection from '@/components/ui/testimonials/testimonials-section';
+import type { GalleryData, GalleryProject, Testimonial } from '../types';
 
 export interface GalleryPageProps {
   title?: string;
