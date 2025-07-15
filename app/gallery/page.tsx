@@ -1,6 +1,6 @@
 'use client';
 
-import { FaBuilding, FaHome, FaIndustry } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import { GalleryPage, galleryData, testimonials } from '@/app/components';
 
 export default function GalleryPageComponent() {

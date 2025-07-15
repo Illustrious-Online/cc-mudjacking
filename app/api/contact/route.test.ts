@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { POST } from './route';
 
 // Mock console.log and console.error
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
-const mockConsoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+const mockConsoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
 describe('Contact API Route', () => {
   beforeEach(() => {

@@ -9,7 +9,7 @@ const contactSchema = z.object({
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
-type ContactFormData = z.infer<typeof contactSchema>;
+// type ContactFormData = z.infer<typeof contactSchema>;
 
 export async function POST(request: NextRequest) {
   try {

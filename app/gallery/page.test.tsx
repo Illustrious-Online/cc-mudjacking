@@ -4,19 +4,28 @@ import GalleryPageComponent from './page';
 
 // Mock the components
 vi.mock('@/app/components', () => ({
-  GalleryPage: ({ galleryData, testimonials, enableTestimonials, sections }: any) => (
+  GalleryPage: ({
+    galleryData,
+    testimonials,
+    enableTestimonials,
+    sections,
+  }: {
+    galleryData: { residential: unknown[] };
+    testimonials: unknown[];
+    enableTestimonials?: boolean;
+    sections: unknown[];
+  }) => (
     <div data-testid="gallery-page">
       <div data-testid="gallery-data">
         <span>Residential: {galleryData.residential.length}</span>
-        <span>Commercial: {galleryData.commercial.length}</span>
-        <span>Foundation: {galleryData.foundation.length}</span>
       </div>
       <div data-testid="testimonials-count">Testimonials: {testimonials.length}</div>
       <div data-testid="testimonials-enabled">Enabled: {enableTestimonials ? 'true' : 'false'}</div>
       <div data-testid="sections">
-        {sections.map((section: any, index: number) => (
-          <div key={section.title} data-testid={`section-${index}`}>
-            {section.title} - {section.projects.length} projects
+        {sections.map((section: unknown, index: number) => (
+          <div key={(section as { title: string }).title} data-testid={`section-${index}`}>
+            {(section as { title: string; projects: unknown[] }).title} -{' '}
+            {(section as { projects: unknown[] }).projects.length} projects
           </div>
         ))}
       </div>
@@ -24,8 +33,6 @@ vi.mock('@/app/components', () => ({
   ),
   galleryData: {
     residential: [{ id: 1 }, { id: 2 }, { id: 3 }],
-    commercial: [{ id: 4 }, { id: 5 }],
-    foundation: [{ id: 6 }],
   },
   testimonials: [
     { id: 1, name: 'Test 1' },
