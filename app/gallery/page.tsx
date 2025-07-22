@@ -15,11 +15,5 @@ export default function GalleryPageComponent() {
     },
   ];
 
-  return (
-    <GalleryPage
-      galleryData={galleryData}
-      testimonials={testimonials}
-      sections={sections}
-    />
-  );
+  return <GalleryPage galleryData={galleryData} testimonials={testimonials} sections={sections} />;
 }

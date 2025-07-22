@@ -29,7 +29,8 @@ export default function HomePage() {
     {
       icon: FaBuilding,
       title: 'Environmentally Friendly',
-      description: 'We use only water and mud/sand mixtures to fix settlements without harming the environment.',
+      description:
+        'We use only water and mud/sand mixtures to fix settlements without harming the environment.',
       features: ['Water-Based Solutions', 'No Chemicals', 'No Digging'],
     },
     {
