@@ -218,22 +218,9 @@ export default function ContactPage() {
                 <Card.Root shadow="md" minW="250px">
                   <Card.Body>
                     <VStack gap={3}>
-                      <Icon as={FaPhone} color="brand.500" boxSize={6} />
-                      <Text fontWeight="semibold">Call Us</Text>
-                      <Text color="gray.500">(555) 123-4567</Text>
-                      <Text fontSize="sm" color="gray.400">
-                        Mon-Fri 8AM-6PM
-                      </Text>
-                    </VStack>
-                  </Card.Body>
-                </Card.Root>
-
-                <Card.Root shadow="md" minW="250px">
-                  <Card.Body>
-                    <VStack gap={3}>
                       <Icon as={FaEnvelope} color="brand.500" boxSize={6} />
                       <Text fontWeight="semibold">Email Us</Text>
-                      <Text color="gray.500">info@ccmudjacking.com</Text>
+                      <Text color="gray.500">ccmudjacking@gmail.com</Text>
                       <Text fontSize="sm" color="gray.400">
                         24/7 Response
                       </Text>

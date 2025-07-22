@@ -52,7 +52,7 @@ describe('ContactPage', () => {
     expect(screen.getByText('Email Us')).toBeInTheDocument();
     expect(screen.getByText('Service Area')).toBeInTheDocument();
     expect(screen.getByText('(555) 123-4567')).toBeInTheDocument();
-    expect(screen.getByText('info@ccmudjacking.com')).toBeInTheDocument();
+    expect(screen.getByText('ccmudjacking@gmail.com')).toBeInTheDocument();
   });
 
   it('shows validation errors for empty required fields', async () => {

@@ -24,40 +24,40 @@ export default function HomePage() {
       title: 'Residential',
       description:
         'Lift sunken driveways, sidewalks, patios, and garage floors with precision and care.',
-      features: ['Driveways & Walkways', 'Patio & Pool Decks', 'Garage Floors'],
+      features: ['Driveways & Walkways', 'Patio & Pool Decks', 'Garage Floors', 'Any Concrete'],
     },
     {
       icon: FaBuilding,
       title: 'Environmentally Friendly',
-      description: 'We use the latest technology to lift concrete without harming the environment.',
-      features: ['No Chemicals', 'No Digging', 'No Destruction'],
+      description: 'We use only water and mud/sand mixtures to fix settlements without harming the environment.',
+      features: ['Water-Based Solutions', 'No Chemicals', 'No Digging'],
     },
     {
       icon: FaTools,
-      title: 'Foundation',
+      title: 'Floating Concrete',
       description:
-        'Comprehensive foundation stabilization and repair services for lasting results.',
-      features: ['Slab Jacking', 'Void Filling', 'Settlement Issues'],
+        'Specialized in lifting and leveling any floating concrete pads without foundation/structural dependency.',
+      features: ['Any Floating Slabs', 'No Foundation Work', 'No Structural Concrete'],
     },
   ];
 
   const beforeAfterImages = [
     {
-      src: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
-      title: 'BEFORE: Sunken Driveway',
+      src: '/projects/1/before-1.jpg',
+      title: 'BEFORE: Sunken Patio & Stairs',
       description: 'Unsafe settlement causing trip hazards',
       type: 'before',
     },
     {
-      src: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
-      title: 'AFTER: Level & Safe',
+      src: '/projects/1/after-1.jpg',
+      title: 'AFTER: Leveled Patio & Stairs',
       description: 'Professional mudjacking restoration',
       type: 'after',
     },
     {
-      src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
-      title: 'COMPLETED: Foundation Fixed',
-      description: 'Permanent solution with warranty',
+      src: '/projects/1/after-2.jpg',
+      title: 'COMPLETED: Patio & Stairs',
+      description: 'Permanent solution with guarantee',
       type: 'after',
     },
   ];
@@ -75,10 +75,10 @@ export default function HomePage() {
         <Container maxW="7xl">
           <Flex width="full" direction={{ base: 'column', md: 'row' }}>
             <VStack px={12} justifyContent="center">
-              <Heading as="h1" size="2xl" fontWeight="bold" color="brand.200">
-                Professional Mudjacking & Concrete Lifting Services
+              <Heading as="h1" size="2xl" fontWeight="bold" textAlign="center" color="brand.200">
+                Professional Mudjacking Services
               </Heading>
-              <Text fontSize="xl" color="brand.50" textAlign="center">
+              <Text fontSize="xl" color="brand.50" textAlign="center" my={4}>
                 Fast, affordable, and permanent solutions for sunken concrete. Trusted by
                 environmentally conscious homeowners.
               </Text>
@@ -93,19 +93,9 @@ export default function HomePage() {
                 >
                   Get Free Estimate
                 </NavLink>
-                <NavLink
-                  href="tel:555-123-4567"
-                  buttonProps={{
-                    size: 'lg',
-                    variant: 'outline',
-                    colorScheme: 'white',
-                  }}
-                >
-                  <FaPhone /> Call (555) 123-4567
-                </NavLink>
               </HStack>
 
-              <HStack gap={6} fontSize="sm" flexWrap="wrap">
+              <HStack gap={6} fontSize="sm" flexWrap="wrap" mt={4}>
                 <HStack>
                   <Icon as={FaShieldAlt} />
                   <Text>Fully Licensed & Insured</Text>
@@ -118,7 +108,7 @@ export default function HomePage() {
             </VStack>
             <Box>
               <Image
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+                src="/main-hero.jpeg"
                 alt="Professional mudjacking equipment and team working on concrete"
                 borderRadius="xl"
                 shadow="2xl"

@@ -25,6 +25,4 @@ export interface Testimonial {
 
 export interface GalleryData {
   residential: GalleryProject[];
-  commercial: GalleryProject[];
-  foundation: GalleryProject[];
 } 

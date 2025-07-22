@@ -9,8 +9,7 @@ export interface GalleryPageProps {
   title?: string;
   description?: string;
   galleryData: GalleryData;
-  testimonials?: Testimonial[];
-  enableTestimonials?: boolean;
+  testimonials: Testimonial[];
   sections?: {
     title: string;
     icon: IconType;
@@ -23,28 +22,15 @@ export default function GalleryPage({
   title = "Before & After Gallery",
   description = "See the incredible transformations we've achieved through professional mudjacking services. From sunken driveways to commercial floors, our work speaks for itself.",
   galleryData,
-  testimonials = [],
-  enableTestimonials = false,
+  testimonials,
   sections,
 }: GalleryPageProps) {
   // Default sections if none provided
   const defaultSections = [
     {
-      title: "Residential Projects",
+      title: "Recent Projects",
       icon: () => null, // Will be overridden by the page
       projects: galleryData.residential,
-      bgColor: "gray.50" as const,
-    },
-    {
-      title: "Commercial Projects",
-      icon: () => null, // Will be overridden by the page
-      projects: galleryData.commercial,
-      bgColor: "gray.50" as const,
-    },
-    {
-      title: "Foundation Projects",
-      icon: () => null, // Will be overridden by the page
-      projects: galleryData.foundation,
       bgColor: "gray.50" as const,
     },
   ];
@@ -64,9 +50,7 @@ export default function GalleryPage({
         />
       ))}
 
-      {enableTestimonials && testimonials.length > 0 && (
-        <TestimonialsSection testimonials={testimonials} />
-      )}
+      <TestimonialsSection testimonials={testimonials} />
     </Wrapper>
   );
 } 

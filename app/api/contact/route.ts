@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const validatedData = contactSchema.parse(body);
 
     // Get the recipient email from environment variables
-    const recipientEmail = process.env.CONTACT_EMAIL || 'info@ccmudjacking.com';
+    const recipientEmail = process.env.CONTACT_EMAIL || 'ccmudjacking@gmail.com';
 
     // For now, we'll just log the data and return success
     // In a real implementation, you would send an email here
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     
     await resend.emails.send({
-      from: 'contact@ccmudjacking.com',
+      from: 'ccmudjacking@gmail.com',
       to: recipientEmail,
       subject: `New Contact Form Submission - ${validatedData.service}`,
       html: `
