@@ -3,12 +3,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import RootLayout, { metadata } from './layout';
 
 // Mock the providers and components
-vi.mock('@/contexts/AuthContext', () => ({
-  AuthProvider: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="auth-provider">{children}</div>
-  ),
-}));
-
 vi.mock('@/providers/ChakraProvider', () => ({
   ChakraProvider: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="chakra-provider">{children}</div>
@@ -34,7 +28,7 @@ describe('RootLayout', () => {
     it('exports correct metadata', () => {
       expect(metadata).toEqual({
         title: 'CC Mudjacking',
-        description: 'Next.js application with Supabase authentication',
+        description: 'Professional mudjacking services',
       });
     });
 
@@ -43,7 +37,7 @@ describe('RootLayout', () => {
     });
 
     it('has description property', () => {
-      expect(metadata.description).toBe('Next.js application with Supabase authentication');
+      expect(metadata.description).toBe('Professional mudjacking services');
     });
   });
 
@@ -78,7 +72,6 @@ describe('RootLayout', () => {
 
       expect(getByTestId('chakra-provider')).toBeInTheDocument();
       expect(getByTestId('theme-provider')).toBeInTheDocument();
-      expect(getByTestId('auth-provider')).toBeInTheDocument();
     });
 
     it('renders children content', () => {
@@ -142,12 +135,10 @@ describe('RootLayout', () => {
       // Check that providers are rendered
       const chakraProvider = getByTestId('chakra-provider');
       const themeProvider = getByTestId('theme-provider');
-      const authProvider = getByTestId('auth-provider');
 
       // Check that providers contain the test child
       expect(chakraProvider).toContainElement(getByTestId('test-child'));
       expect(themeProvider).toContainElement(getByTestId('test-child'));
-      expect(authProvider).toContainElement(getByTestId('test-child'));
     });
   });
 });

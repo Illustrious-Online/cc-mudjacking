@@ -17,7 +17,7 @@ import { FaBuilding, FaClock, FaHome, FaPhone, FaShieldAlt, FaTools } from 'reac
 import CallToActionButtons from '@/components/ui/call-to-action-buttons';
 import NavLink from '@/components/ui/nav-link';
 import Wrapper from '@/components/ui/wrapper';
-import { CALL_US_TODAY, FREE_ESTIMATE, PHONE_NUMBER } from './constants';
+import { FREE_ESTIMATE, PHONE_NUMBER } from './constants';
 
 export default function HomePage() {
   const services = [
@@ -108,9 +108,6 @@ export default function HomePage() {
                   }}
                 >
                   <FaPhone />
-                  <Text fontSize="xs" color="brand.200">
-                    {CALL_US_TODAY}
-                  </Text>
                   <Text fontSize="sm">{PHONE_NUMBER}</Text>
                 </NavLink>
               </HStack>

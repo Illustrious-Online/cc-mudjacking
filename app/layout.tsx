@@ -2,12 +2,11 @@ import { ColorModeScript } from '@chakra-ui/color-mode';
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
-import { AuthProvider } from '@/contexts/AuthContext';
 import { ChakraProvider } from '@/providers/ChakraProvider';
 
 export const metadata: Metadata = {
   title: 'CC Mudjacking',
-  description: 'Next.js application with Supabase authentication',
+  description: 'Professional mudjacking services',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         <ChakraProvider>
           <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            <AuthProvider>{children}</AuthProvider>
+            {children}
           </ThemeProvider>
         </ChakraProvider>
       </body>

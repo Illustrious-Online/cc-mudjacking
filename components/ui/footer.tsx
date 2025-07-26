@@ -26,13 +26,13 @@ const Footer: FC = () => {
               <VStack gap={1} align={{ base: "center", md: "start" }} fontSize="sm">
                 <HStack gap={2}>
                   <FaPhone color="var(--chakra-colors-brand-300)" />
-                  <Link href="tel:6416919999" _hover={{ color: "brand.200" }}>
+                  <Link href="tel:6416919999" color="white" _hover={{ color: "brand.200" }}>
                     {PHONE_NUMBER}
                   </Link>
                 </HStack>
                 <HStack gap={2}>
                   <FaEnvelope color="var(--chakra-colors-brand-300)" />
-                  <Link href="mailto:ccmudjacking@gmail.com" _hover={{ color: "brand.200" }}>
+                  <Link href="mailto:ccmudjacking@gmail.com" color="white" _hover={{ color: "brand.200" }}>
                     ccmudjacking@gmail.com
                   </Link>
                 </HStack>
@@ -45,18 +45,18 @@ const Footer: FC = () => {
               </Text>
               <VStack gap={2} align={{ base: "center", md: "end" }} fontSize="sm">
                 <HStack gap={2} align={{ base: "center", md: "end" }}>
-                  <Link href="/" _hover={{ color: "brand.200" }}>
+                  <Link href="/" color="white" _hover={{ color: "brand.200" }}>
                     Home
                   </Link>
-                  <Link href="/gallery" _hover={{ color: "brand.200" }}>
+                  <Link href="/gallery" color="white" _hover={{ color: "brand.200" }}>
                     Gallery
                   </Link>
-                  <Link href="/contact" _hover={{ color: "brand.200" }}>
+                  <Link href="/contact" color="white" _hover={{ color: "brand.200" }}>
                     Contact
                   </Link>
                 </HStack>
                 <HStack gap={1} align={{ base: "center", md: "end" }}>
-                  <Link href="/privacy" _hover={{ color: "brand.200" }}>
+                  <Link href="/privacy" color="white" _hover={{ color: "brand.200" }}>
                     Privacy Policy
                   </Link>
                 </HStack>

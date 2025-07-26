@@ -1,6 +1,6 @@
 # CC Mudjacking - Professional Concrete Lifting Services
 
-A modern, responsive website for CC Mudjacking, a professional concrete lifting and foundation repair company. Built with Next.js 15, Chakra UI, and Supabase authentication.
+A modern, responsive website for CC Mudjacking, a professional concrete lifting and foundation repair company. Built with Next.js 15 and Chakra UI.
 
 ## 🏗️ About
 
@@ -13,7 +13,6 @@ CC Mudjacking provides professional concrete lifting and foundation repair servi
 ## ✨ Features
 
 - **Modern UI/UX**: Beautiful, responsive design with Chakra UI components
-- **Authentication System**: Secure user authentication with Supabase
 - **Contact Forms**: Easy-to-use contact and quote request forms
 - **Before/After Gallery**: Showcase of completed projects
 - **Mobile Responsive**: Optimized for all device sizes
@@ -35,7 +34,6 @@ CC Mudjacking provides professional concrete lifting and foundation repair servi
 
 ### Backend & Services
 
-- **Supabase** - Authentication and database
 - **Formik** - Form handling
 - **Zod** - Schema validation
 
@@ -76,21 +74,13 @@ CC Mudjacking provides professional concrete lifting and foundation repair servi
    bun install
    ```
 
-3. **Set up environment variables**
-   Create a `.env.local` file in the root directory:
-
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-4. **Start the development server**
+3. **Start the development server**
 
    ```bash
    bun dev
    ```
 
-5. **Open your browser**
+4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 📝 Available Scripts
@@ -166,28 +156,15 @@ Edit `k8s/values.yaml` to customize:
 cc-mudjacking/
 ├── app/                    # Next.js App Router pages
 │   ├── api/               # API routes
-│   ├── auth/              # Authentication pages
 │   └── page.tsx           # Home page
 ├── components/            # Reusable UI components
 │   └── ui/               # Base UI components
-├── contexts/             # React contexts
-├── lib/                  # Utility libraries
-│   └── supabase/        # Supabase client configuration
 ├── providers/            # App providers
-├── services/             # Business logic services
-├── types/                # TypeScript type definitions
 ├── k8s/                  # Kubernetes manifests
 └── public/               # Static assets
 ```
 
 ## 🔧 Configuration
-
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Yes |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key | Yes |
 
 ### Chakra UI Theme
 
@@ -221,7 +198,6 @@ For support, email nick@illustrious.online or create an issue in this repository
 - **Website**: [ccmudjacking.com](https://ccmudjacking.com)
 - **Documentation**: [Next.js Docs](https://nextjs.org/docs)
 - **Chakra UI**: [chakra-ui.com](https://chakra-ui.com)
-- **Supabase**: [supabase.com](https://supabase.com)
 
 ---
 

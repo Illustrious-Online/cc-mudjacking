@@ -29,8 +29,7 @@
     "core-js",
     "core-js-pure",
     "esbuild",
-    "sharp",
-    "supabase"
+    "sharp"
   ],
   "dependencies": {
     "@chakra-ui/cli": "^3.22.0",
@@ -41,8 +40,6 @@
     "@emotion/styled": "^11.14.1",
     "@next/env": "^15.3.5",
     "@sentry/nextjs": "^9.36.0",
-    "@supabase/ssr": "^0.6.1",
-    "@supabase/supabase-js": "^2.50.4",
     "critters": "^0.0.25",
     "formik": "^2.4.6",
     "formik-validator-zod": "^2.2.0",
