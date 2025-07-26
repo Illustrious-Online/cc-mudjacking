@@ -23,15 +23,15 @@ export const galleryData: GalleryData = {
       before: {
         src: '/projects/2/before-2.jpg',
         title: 'Sunken/Cracked Driveway',
-        description: 'Pool deck with dangerous elevation changes',
+        description: 'Sunken driveway with cracks and uneven surface',
       },
       after: {
         src: '/projects/2/after-1.jpg',
         title: 'Perfectly Level',
-        description: 'Safe, level surface for family enjoyment',
+        description: 'Leveled driveway with proper drainage',
       },
       service: 'Driveway Leveling',
-      location: 'Backyard Pool Area',
+      location: 'Residential Home',
       completionTime: '2 Days',
     },
     {

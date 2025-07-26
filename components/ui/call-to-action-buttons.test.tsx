@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import CallToActionButtons from './call-to-action-buttons';
-import { FREE_ESTIMATE, CALL_US_TODAY, PHONE_NUMBER } from '@/app/constants';
+import { FREE_ESTIMATE, PHONE_NUMBER } from '@/app/constants';
 
 // Mock the NavLink component
 vi.mock('./nav-link', () => ({
@@ -34,7 +34,6 @@ describe('CallToActionButtons', () => {
     
     // Check phone button
     expect(navLinks[1]).toHaveAttribute('href', 'tel:6416919999');
-    expect(navLinks[1]).toHaveTextContent(CALL_US_TODAY);
     expect(navLinks[1]).toHaveTextContent(PHONE_NUMBER);
   });
 
@@ -44,24 +43,6 @@ describe('CallToActionButtons', () => {
     // Verify the component renders correctly with custom margin
     const navLinks = screen.getAllByTestId('nav-link');
     expect(navLinks).toHaveLength(2);
-  });
-
-  it('renders with white phone button when whitePhoneButton is true', () => {
-    renderCallToActionButtons({ whitePhoneButton: true });
-    
-    const navLinks = screen.getAllByTestId('nav-link');
-    const phoneButton = navLinks[1];
-    
-    expect(phoneButton).toHaveAttribute('colorScheme', 'white');
-  });
-
-  it('renders with brand phone button when whitePhoneButton is false', () => {
-    renderCallToActionButtons({ whitePhoneButton: false });
-    
-    const navLinks = screen.getAllByTestId('nav-link');
-    const phoneButton = navLinks[1];
-    
-    expect(phoneButton).toHaveAttribute('colorScheme', 'brand');
   });
 
   it('renders with brand phone button by default', () => {
@@ -77,7 +58,6 @@ describe('CallToActionButtons', () => {
     renderCallToActionButtons({});
     
     const phoneButton = screen.getAllByTestId('nav-link')[1];
-    expect(phoneButton).toHaveTextContent(CALL_US_TODAY);
     expect(phoneButton).toHaveTextContent(PHONE_NUMBER);
   });
 

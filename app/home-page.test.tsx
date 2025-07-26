@@ -65,7 +65,7 @@ describe('Home Page', () => {
   it('renders call-to-action buttons', () => {
     renderHome();
     expect(screen.getAllByText(/Get Your Free Estimate Today/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Call Us Now/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/\(641\) 691-9999/i).length).toBeGreaterThan(0);
   });
 
   it('renders trust indicators', () => {

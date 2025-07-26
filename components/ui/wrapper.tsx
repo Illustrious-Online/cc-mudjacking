@@ -34,12 +34,48 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
 
   return (
     <AuthGuard>
-      <Box height="100vh" display="flex" flexDirection="column">
+      <Box minHeight="100vh" display="flex" flexDirection="column">
         <Toaster />
-        <Flex as="header" padding={4} color="white" align="center">
-          <Image borderRadius="md" src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} alt="Logo" width={"6rem"} mr={6} />
+        <Flex 
+          as="header" 
+          padding={4} 
+          color="white" 
+          align="center" 
+          position={{ base: "sticky", md: "relative" }}
+          top={0}
+          zIndex={1000}
+          bg="brand.600"
+          borderBottom={{ base: "1px solid", md: "none" }}
+          borderColor="whiteAlpha.200"
+        >
+          {/* Desktop: Logo on left */}
+          <Image 
+            borderRadius="md" 
+            src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} 
+            alt="Logo" 
+            width={"6rem"} 
+            mr={6}
+            display={{ base: "none", md: "block" }}
+          />
+          
+          {/* Mobile: Centered logo */}
+          <Image 
+            borderRadius="md" 
+            src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} 
+            alt="Logo" 
+            width={"6rem"} 
+            position="absolute"
+            left="50%"
+            transform="translateX(-50%)"
+            display={{ base: "block", md: "none" }}
+          />
+          
+          {/* Navigation */}
           <Navigation />
+          
           <Spacer />
+          
+          {/* Right side - Action buttons */}
           <Flex gap={4} align="center">
             {session && (
               <Button variant={"ghost"} onClick={handleSignOut}>
