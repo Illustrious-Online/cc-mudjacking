@@ -24,7 +24,6 @@ export default defineConfig({
         '**/*.spec.ts',
         'sentry.*.config.ts',
         'instrumentation.ts',
-        'lib/supabase',
         'setupTests.ts',
         'coverage/**',
         'node_modules/**',
@@ -36,8 +35,6 @@ export default defineConfig({
       include: [
         'app/**/*.{ts,tsx}',
         'components/**/*.{ts,tsx}',
-        'contexts/**/*.{ts,tsx}',
-        'services/**/*.{ts,tsx}',
         'providers/**/*.{ts,tsx}',
       ],
       thresholds: {

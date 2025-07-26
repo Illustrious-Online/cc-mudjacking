@@ -21,34 +21,7 @@ vi.mock('next/headers', () => ({
 }));
 
 // Mock environment variables
-process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co';
-process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
 process.env.NEXT_PUBLIC_APP_URL = 'http://localhost:3000';
-
-// Mock Supabase client
-const mockSupabaseClient = {
-  auth: {
-    signInWithPassword: vi.fn(),
-    signUp: vi.fn(),
-    signOut: vi.fn(),
-    signInWithOauth: vi.fn(),
-    resetPasswordForEmail: vi.fn(),
-    updateUser: vi.fn(),
-    getSession: vi.fn(),
-    exchangeCodeForSession: vi.fn(),
-    onAuthStateChange: vi.fn(() => ({
-      data: { subscription: { unsubscribe: vi.fn() } }
-    })),
-  },
-};
-
-vi.mock('@/lib/supabase/client', () => ({
-  createClientSupabaseClient: () => mockSupabaseClient,
-}));
-
-vi.mock('@/lib/supabase/server', () => ({
-  createServerSupabaseClient: () => mockSupabaseClient,
-}));
 
 // Mock window.matchMedia
 Object.defineProperty(window, "matchMedia", {
@@ -83,4 +56,4 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 }));
 
 // Export mock objects for use in tests
-export { mockRouter, mockSupabaseClient };
+export { mockRouter };

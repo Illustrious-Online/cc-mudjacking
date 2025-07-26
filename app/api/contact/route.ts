@@ -58,29 +58,6 @@ export async function POST(request: NextRequest) {
     });
     */
 
-    // TODO: Store in database for dashboard
-    // You can use your existing Supabase setup:
-    /*
-    import { createClient } from '@supabase/supabase-js';
-    
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
-    
-    await supabase
-      .from('contact_inquiries')
-      .insert({
-        name: validatedData.name,
-        email: validatedData.email,
-        phone: validatedData.phone,
-        service: validatedData.service,
-        message: validatedData.message,
-        status: 'new',
-        created_at: new Date().toISOString(),
-      });
-    */
-
     return NextResponse.json({ message: 'Contact form submitted successfully' }, { status: 200 });
   } catch (error) {
     console.error('Contact form error:', error);

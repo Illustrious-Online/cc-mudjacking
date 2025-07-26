@@ -1,22 +1,10 @@
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
-import { useAuth } from '@/contexts/AuthContext';
+import { describe, expect, it, vi } from 'vitest';
 import HomePage from './page';
 
 vi.mock('@/components/wrapper', () => ({
   default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-}));
-
-vi.mock('@/contexts/AuthContext', () => ({
-  useAuth: vi.fn(),
-}));
-
-vi.mock('next/navigation', () => ({
-  useRouter: vi.fn(() => ({
-    push: vi.fn(),
-    refresh: vi.fn(),
-  })),
 }));
 
 const renderHome = () => {
@@ -28,11 +16,6 @@ const renderHome = () => {
 };
 
 describe('Home Page', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    (useAuth as unknown as Mock).mockReturnValue({ session: null });
-  });
-
   it('renders the main headings', () => {
     renderHome();
     expect(
