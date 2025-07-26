@@ -28,7 +28,7 @@ export default function GallerySection({
   'data-testid': testId = 'gallery-section',
 }: GallerySectionProps) {
   return (
-    <Box py={16} bg={bgColor} data-testid={testId}>
+    <Box pt={12} bg={bgColor} data-testid={testId}>
       <Container maxW="7xl">
         <VStack gap={12}>
           <VStack textAlign="center" gap={4} data-testid={`${testId}-header`}>

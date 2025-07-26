@@ -14,8 +14,10 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { FaBuilding, FaClock, FaHome, FaPhone, FaShieldAlt, FaTools } from 'react-icons/fa';
+import CallToActionButtons from '@/components/ui/call-to-action-buttons';
 import NavLink from '@/components/ui/nav-link';
 import Wrapper from '@/components/ui/wrapper';
+import { CALL_US_TODAY, FREE_ESTIMATE, PHONE_NUMBER } from './constants';
 
 export default function HomePage() {
   const services = [
@@ -24,21 +26,21 @@ export default function HomePage() {
       title: 'Residential',
       description:
         'Lift sunken driveways, sidewalks, patios, and garage floors with precision and care.',
-      features: ['Driveways & Walkways', 'Patio & Pool Decks', 'Garage Floors', 'Any Concrete'],
+      features: ['Driveways & Walkways', 'Patio & Pool Decks', 'Garage Floors', 'Void Filling'],
     },
     {
       icon: FaBuilding,
       title: 'Environmentally Friendly',
       description:
         'We use only water and mud/sand mixtures to fix settlements without harming the environment.',
-      features: ['Water-Based Solutions', 'No Chemicals', 'No Digging'],
+      features: ['Water-Based Solutions', 'No Chemicals'],
     },
     {
       icon: FaTools,
       title: 'Floating Concrete',
       description:
         'Specialized in lifting and leveling any floating concrete pads without foundation/structural dependency.',
-      features: ['Any Floating Slabs', 'No Foundation Work', 'No Structural Concrete'],
+      features: ['Any Floating Slabs'],
     },
   ];
 
@@ -79,11 +81,14 @@ export default function HomePage() {
               <Heading as="h1" size="2xl" fontWeight="bold" textAlign="center" color="brand.200">
                 Professional Mudjacking Services
               </Heading>
+              <Heading as="h2" size="xl" fontWeight="bold" textAlign="center" color="brand.100">
+                If it doesn't move, you don't pay!
+              </Heading>
               <Text fontSize="xl" color="brand.50" textAlign="center" my={4}>
                 Fast, affordable, and permanent solutions for sunken concrete. Trusted by
                 environmentally conscious homeowners.
               </Text>
-              <HStack gap={4} flexWrap="wrap">
+              <HStack gap={4} flexWrap="wrap" justifyContent="center">
                 <NavLink
                   href="/contact"
                   buttonProps={{
@@ -92,18 +97,32 @@ export default function HomePage() {
                     colorScheme: 'white',
                   }}
                 >
-                  Get Free Estimate
+                  {FREE_ESTIMATE}
+                </NavLink>
+                <NavLink
+                  href="tel:6416919999"
+                  buttonProps={{
+                    size: 'lg',
+                    variant: 'outline',
+                    colorScheme: 'white',
+                  }}
+                >
+                  <FaPhone />
+                  <Text fontSize="xs" color="brand.200">
+                    {CALL_US_TODAY}
+                  </Text>
+                  <Text fontSize="sm">{PHONE_NUMBER}</Text>
                 </NavLink>
               </HStack>
 
               <HStack gap={6} fontSize="sm" flexWrap="wrap" mt={4}>
                 <HStack>
                   <Icon as={FaShieldAlt} />
-                  <Text>Fully Licensed & Insured</Text>
+                  <Text>Fully Insured</Text>
                 </HStack>
                 <HStack>
                   <Icon as={FaClock} />
-                  <Text>Same Day Response</Text>
+                  <Text>Speedy Response</Text>
                 </HStack>
               </HStack>
             </VStack>
@@ -221,16 +240,7 @@ export default function HomePage() {
               </NavLink>
             </VStack>
 
-            <NavLink
-              href="/contact"
-              buttonProps={{
-                size: 'lg',
-                variant: 'solid',
-                colorScheme: 'brand',
-              }}
-            >
-              Get Your Free Estimate Today
-            </NavLink>
+            <CallToActionButtons whitePhoneButton={true} />
           </VStack>
         </Container>
       </Box>
