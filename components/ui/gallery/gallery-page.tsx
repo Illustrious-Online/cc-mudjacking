@@ -57,7 +57,7 @@ export default function GalleryPage({
       {enableTestimonials && <TestimonialsSection testimonials={testimonials} />}
     
       <Box pb={12}>
-        <CallToActionButtons whitePhoneButton={true} mt={16} />
+        <CallToActionButtons mt={16} />
       </Box>
     </Wrapper>
   );
