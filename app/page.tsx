@@ -237,7 +237,7 @@ export default function HomePage() {
               </NavLink>
             </VStack>
 
-            <CallToActionButtons whitePhoneButton={true} />
+            <CallToActionButtons />
           </VStack>
         </Container>
       </Box>
