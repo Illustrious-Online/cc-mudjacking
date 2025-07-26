@@ -38,7 +38,7 @@ describe('Home Page', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Professional Mudjacking & Concrete Lifting Services/i,
+        name: /Professional Mudjacking Services/i,
       })
     ).toBeInTheDocument();
     expect(
@@ -64,13 +64,13 @@ describe('Home Page', () => {
 
   it('renders call-to-action buttons', () => {
     renderHome();
-    expect(screen.getByText(/Get Free Estimate/i)).toBeInTheDocument();
-    expect(screen.getByText(/Call \(555\) 123-4567/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Get Your Free Estimate Today/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Call Us Now/i).length).toBeGreaterThan(0);
   });
 
   it('renders trust indicators', () => {
     renderHome();
-    expect(screen.getByText(/Fully Licensed & Insured/i)).toBeInTheDocument();
-    expect(screen.getByText(/Same Day Response/i)).toBeInTheDocument();
+    expect(screen.getByText(/Fully Insured/i)).toBeInTheDocument();
+    expect(screen.getByText(/Speedy Response/i)).toBeInTheDocument();
   });
 });

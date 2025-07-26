@@ -34,7 +34,7 @@ describe('Contact API Route', () => {
       'Contact form submission:',
       expect.objectContaining({
         ...validData,
-        recipientEmail: 'info@ccmudjacking.com',
+        recipientEmail: 'ccmudjacking@gmail.com',
       })
     );
   });

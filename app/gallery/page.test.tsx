@@ -76,7 +76,7 @@ describe('GalleryPageComponent', () => {
   it('passes correct sections configuration', () => {
     render(<GalleryPageComponent />);
 
-    expect(screen.getByText('Residential Projects - 3 projects')).toBeInTheDocument();
+    expect(screen.getByText('Recent Projects - 3 projects')).toBeInTheDocument();
   });
 
   it('renders all three sections', () => {

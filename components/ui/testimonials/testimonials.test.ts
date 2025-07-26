@@ -82,14 +82,6 @@ describe('Testimonials', () => {
       'Industrial Floor Leveling',
       'Patio Leveling',
       'Parking Lot Leveling',
-      'Garage Floor Leveling',
-      'Foundation Stabilization',
-      'Sidewalk Leveling',
-      'Commercial Foundation Repair',
-      'Pool Deck Leveling',
-      'Multi-Property Repair',
-      'Basement Floor Leveling',
-      'Warehouse Floor Leveling',
     ];
 
     const actualServices = testimonials.map((testimonial) => testimonial.service);

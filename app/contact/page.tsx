@@ -20,6 +20,7 @@ import { FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { z } from 'zod';
 import { toaster } from '@/components/ui/toaster';
 import Wrapper from '@/components/ui/wrapper';
+import { PHONE_NUMBER } from '../constants';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -218,24 +219,11 @@ export default function ContactPage() {
                 <Card.Root shadow="md" minW="250px">
                   <Card.Body>
                     <VStack gap={3}>
-                      <Icon as={FaPhone} color="brand.500" boxSize={6} />
-                      <Text fontWeight="semibold">Call Us</Text>
-                      <Text color="gray.500">(555) 123-4567</Text>
-                      <Text fontSize="sm" color="gray.400">
-                        Mon-Fri 8AM-6PM
-                      </Text>
-                    </VStack>
-                  </Card.Body>
-                </Card.Root>
-
-                <Card.Root shadow="md" minW="250px">
-                  <Card.Body>
-                    <VStack gap={3}>
                       <Icon as={FaEnvelope} color="brand.500" boxSize={6} />
                       <Text fontWeight="semibold">Email Us</Text>
-                      <Text color="gray.500">info@ccmudjacking.com</Text>
+                      <Text color="gray.500">ccmudjacking@gmail.com</Text>
                       <Text fontSize="sm" color="gray.400">
-                        24/7 Response
+                        Reach out to us 24/7
                       </Text>
                     </VStack>
                   </Card.Body>
@@ -249,6 +237,19 @@ export default function ContactPage() {
                       <Text color="gray.500">Greater Metro Area</Text>
                       <Text fontSize="sm" color="gray.400">
                         Free Estimates
+                      </Text>
+                    </VStack>
+                  </Card.Body>
+                </Card.Root>
+
+                <Card.Root shadow="md" minW="250px">
+                  <Card.Body>
+                    <VStack gap={3}>
+                      <Icon as={FaPhone} color="brand.500" boxSize={6} />
+                      <Text fontWeight="semibold">Call Us</Text>
+                      <Text color="gray.500">{PHONE_NUMBER}</Text>
+                      <Text fontSize="sm" color="gray.400">
+                        Speedy Response Time
                       </Text>
                     </VStack>
                   </Card.Body>

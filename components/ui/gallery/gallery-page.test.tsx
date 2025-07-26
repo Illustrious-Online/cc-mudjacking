@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
-import { FaHome, FaBuilding, FaIndustry } from 'react-icons/fa';
+import { FaHome, FaBuilding } from 'react-icons/fa';
 import GalleryPage from './gallery-page';
-import { galleryData, testimonials } from './gallery-data';
+import { galleryData } from './gallery-data';
+import { testimonials } from '@/components/ui/testimonials/testimonials';
 
 const renderWithProvider = (component: React.ReactElement) => {
   return render(<ChakraProvider value={defaultSystem}>{component}</ChakraProvider>);
@@ -27,7 +28,7 @@ vi.mock('./gallery-hero', () => ({
 }));
 
 vi.mock('./gallery-section', () => ({
-  default: ({ title, icon, projects, bgColor, 'data-testid': testId = 'gallery-section' }: any) => (
+  default: ({ title, icon, projects, 'data-testid': testId = 'gallery-section' }: any) => (
     <div data-testid={testId}>
       <h2 data-testid={`${testId}-title`}>{title}</h2>
       <p data-testid={`${testId}-description`}>
@@ -62,7 +63,7 @@ vi.mock('@/components/ui/testimonials/testimonials-section', () => ({
 
 describe('GalleryPage', () => {
   it('renders with default props', () => {
-    renderWithProvider(<GalleryPage galleryData={galleryData} />);
+    renderWithProvider(<GalleryPage galleryData={galleryData} testimonials={testimonials} />);
 
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
     expect(screen.getByTestId('gallery-hero')).toBeInTheDocument();
@@ -77,6 +78,7 @@ describe('GalleryPage', () => {
     renderWithProvider(
       <GalleryPage
         galleryData={galleryData}
+        testimonials={testimonials}
         title={customTitle}
         description={customDescription}
       />
@@ -87,11 +89,9 @@ describe('GalleryPage', () => {
   });
 
   it('renders default sections when no sections prop provided', () => {
-    renderWithProvider(<GalleryPage galleryData={galleryData} />);
+    renderWithProvider(<GalleryPage galleryData={galleryData} testimonials={testimonials} />);
 
-    expect(screen.getByText('Residential Projects')).toBeInTheDocument();
-    expect(screen.getByText('Commercial Projects')).toBeInTheDocument();
-    expect(screen.getByText('Foundation Projects')).toBeInTheDocument();
+    expect(screen.getByText('Recent Projects')).toBeInTheDocument();
   });
 
   it('renders custom sections when provided', () => {
@@ -105,23 +105,24 @@ describe('GalleryPage', () => {
       {
         title: 'Custom Section 2',
         icon: FaBuilding,
-        projects: galleryData.commercial,
+        projects: galleryData.residential,
       },
     ];
 
     renderWithProvider(
       <GalleryPage
         galleryData={galleryData}
+        testimonials={testimonials}
         sections={customSections}
       />
     );
 
     expect(screen.getByText('Custom Section 1')).toBeInTheDocument();
     expect(screen.getByText('Custom Section 2')).toBeInTheDocument();
-    expect(screen.queryByText('Residential Projects')).not.toBeInTheDocument();
+    expect(screen.queryByText('Recent Projects')).not.toBeInTheDocument();
   });
 
-  it('renders testimonials section when enabled and testimonials provided', () => {
+  it('renders testimonials section when testimonials provided', () => {
     renderWithProvider(
       <GalleryPage
         galleryData={galleryData}
@@ -134,63 +135,21 @@ describe('GalleryPage', () => {
     expect(screen.getByText('What Our Customers Say')).toBeInTheDocument();
   });
 
-  it('does not render testimonials section when disabled', () => {
-    renderWithProvider(
-      <GalleryPage
-        galleryData={galleryData}
-        testimonials={testimonials}
-        enableTestimonials={false}
-      />
-    );
-
-    expect(screen.queryByTestId('testimonials-section')).not.toBeInTheDocument();
-  });
-
-  it('does not render testimonials section when no testimonials provided', () => {
-    renderWithProvider(
-      <GalleryPage
-        galleryData={galleryData}
-        enableTestimonials={true}
-      />
-    );
-
-    expect(screen.queryByTestId('testimonials-section')).not.toBeInTheDocument();
-  });
-
   it('renders correct number of projects in each section', () => {
-    renderWithProvider(<GalleryPage galleryData={galleryData} />);
+    renderWithProvider(<GalleryPage galleryData={galleryData} testimonials={testimonials} />);
 
     // Check that the sections exist and contain the expected number of cards
-    const residentialSection = screen.getByText('Residential Projects').closest('[data-testid="gallery-section"]');
-    const commercialSection = screen.getByText('Commercial Projects').closest('[data-testid="gallery-section"]');
-    const foundationSection = screen.getByText('Foundation Projects').closest('[data-testid="gallery-section"]');
-
-    expect(residentialSection).toBeInTheDocument();
-    expect(commercialSection).toBeInTheDocument();
-    expect(foundationSection).toBeInTheDocument();
-  });
-
-  it('applies background colors to sections correctly', () => {
-    renderWithProvider(<GalleryPage galleryData={galleryData} />);
-
-    const residentialSection = screen.getByText('Residential Projects').closest('[data-testid="gallery-section"]');
-    const foundationSection = screen.getByText('Foundation Projects').closest('[data-testid="gallery-section"]');
-
-    expect(residentialSection).toBeInTheDocument();
-    expect(foundationSection).toBeInTheDocument();
+    const recentSection = screen.getByText('Recent Projects').closest('[data-testid="gallery-section"]');
+    expect(recentSection).toBeInTheDocument();
   });
 
   it('handles empty gallery data gracefully', () => {
     const emptyGalleryData = {
       residential: [],
-      commercial: [],
-      foundation: [],
     };
 
-    renderWithProvider(<GalleryPage galleryData={emptyGalleryData} />);
+    renderWithProvider(<GalleryPage galleryData={emptyGalleryData} testimonials={testimonials} />);
 
-    expect(screen.getByText('Residential Projects')).toBeInTheDocument();
-    expect(screen.getByText('Commercial Projects')).toBeInTheDocument();
-    expect(screen.getByText('Foundation Projects')).toBeInTheDocument();
+    expect(screen.getByText('Recent Projects')).toBeInTheDocument();
   });
 }); 

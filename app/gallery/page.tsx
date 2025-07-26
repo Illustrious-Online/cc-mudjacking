@@ -8,19 +8,12 @@ import { testimonials } from '@/components/ui/testimonials/testimonials';
 export default function GalleryPageComponent() {
   const sections = [
     {
-      title: 'Residential Projects',
+      title: 'Recent Projects',
       icon: FaHome,
       projects: galleryData.residential,
       bgColor: 'gray.50' as const,
     },
   ];
 
-  return (
-    <GalleryPage
-      galleryData={galleryData}
-      testimonials={testimonials}
-      enableTestimonials={false}
-      sections={sections}
-    />
-  );
+  return <GalleryPage galleryData={galleryData} testimonials={testimonials} sections={sections} />;
 }

@@ -1,16 +1,14 @@
 "use client";
 
-import logo from "@/public/logo.png";
-import logoWhite from "@/public/logo-white.jpg";
 import { useAuth } from "@/contexts/AuthContext";
 import { Box, Button, Flex, Image, Spacer } from "@chakra-ui/react";
 import type { FC, ReactNode } from "react";
-import * as React from "react";
 import { ColorModeButton, useColorMode } from "./color-mode";
 import { Toaster, toaster } from "./toaster";
 import { useRouter } from "next/navigation";
 import AuthGuard from "./auth-guard";
 import Navigation from "./navigation";
+import Footer from "./footer";
 
 interface LayoutProps {
   children: ReactNode;
@@ -52,9 +50,10 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
           </Flex>
         </Flex>
 
-        <Box as="main" height="100%">
+        <Box as="main" flex="1">
           {children}
         </Box>
+        <Footer />
       </Box>
     </AuthGuard>
   );
