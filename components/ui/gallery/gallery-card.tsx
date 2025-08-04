@@ -17,7 +17,17 @@ interface GalleryCardProps {
 
 export default function GalleryCard({ project, 'data-testid': testId = 'gallery-card' }: GalleryCardProps) {
   return (
-    <Card.Root data-testid={testId} shadow="lg">
+    <Card.Root 
+      data-testid={testId} 
+      shadow="elevation1"
+      borderRadius="large"
+      overflow="hidden"
+      _hover={{
+        shadow: "elevation3",
+        transform: "translateY(-4px)",
+      }}
+      transition="all 0.3s ease-in-out"
+    >
       <Card.Body p={0}>
         <SimpleGrid columns={2} gap={0}>
           <Box position="relative" data-testid={`${testId}-before`}>
@@ -30,10 +40,16 @@ export default function GalleryCard({ project, 'data-testid': testId = 'gallery-
             />
             <Badge
               position="absolute"
-              top={2}
-              left={2}
-              colorScheme="red"
-              variant="solid"
+              top={3}
+              left={3}
+              bg="neutral.10"
+              color="red"
+              borderRadius="medium"
+              px={3}
+              py={1}
+              fontSize="labelSmall"
+              fontWeight="medium"
+              letterSpacing="labelSmall"
               data-testid={`${testId}-before-badge`}
             >
               BEFORE
@@ -49,10 +65,16 @@ export default function GalleryCard({ project, 'data-testid': testId = 'gallery-
             />
             <Badge
               position="absolute"
-              top={2}
-              right={2}
-              colorScheme="green"
-              variant="solid"
+              top={3}
+              right={3}
+              bg="neutral.10"
+              color="green"
+              borderRadius="medium"
+              px={3}
+              py={1}
+              fontSize="labelSmall"
+              fontWeight="medium"
+              letterSpacing="labelSmall"
               data-testid={`${testId}-after-badge`}
             >
               AFTER
@@ -60,24 +82,62 @@ export default function GalleryCard({ project, 'data-testid': testId = 'gallery-
           </Box>
         </SimpleGrid>
         <Box p={6}>
-          <VStack align="start" gap={3}>
-            <Heading as="h3" size="md" data-testid={`${testId}-service`}>
+          <VStack align="start" gap={4}>
+            <Heading 
+              as="h3" 
+              fontSize="titleLarge"
+              fontWeight="bold"
+              lineHeight="titleLarge"
+              letterSpacing="titleLarge"
+              color="onSurface"
+              data-testid={`${testId}-service`}
+            >
               {project.service}
             </Heading>
-            <Text fontSize="sm" color="gray.500" data-testid={`${testId}-meta`}>
+            <Text 
+              fontSize="bodyMedium" 
+              color="onSurfaceVariant" 
+              lineHeight="bodyMedium"
+              letterSpacing="bodyMedium"
+              data-testid={`${testId}-meta`}
+            >
               {project.location} • Completed in {project.completionTime}
             </Text>
-            <VStack align="start" gap={2} fontSize="sm">
-              <Text fontWeight="semibold" color="red.600" data-testid={`${testId}-before-title`}>
+            <VStack align="start" gap={3} fontSize="bodyMedium">
+              <Text 
+                fontWeight="medium" 
+                color="red"
+                fontSize="titleSmall"
+                lineHeight="titleSmall"
+                letterSpacing="titleSmall"
+                data-testid={`${testId}-before-title`}
+              >
                 Before: {project.before.title}
               </Text>
-              <Text color="gray.600" data-testid={`${testId}-before-description`}>
+              <Text 
+                color="onSurfaceVariant"
+                lineHeight="bodyMedium"
+                letterSpacing="bodyMedium"
+                data-testid={`${testId}-before-description`}
+              >
                 {project.before.description}
               </Text>
-              <Text fontWeight="semibold" color="green.600" data-testid={`${testId}-after-title`}>
+              <Text 
+                fontWeight="medium" 
+                color="green"
+                fontSize="titleSmall"
+                lineHeight="titleSmall"
+                letterSpacing="titleSmall"
+                data-testid={`${testId}-after-title`}
+              >
                 After: {project.after.title}
               </Text>
-              <Text color="gray.600" data-testid={`${testId}-after-description`}>
+              <Text 
+                color="onSurfaceVariant"
+                lineHeight="bodyMedium"
+                letterSpacing="bodyMedium"
+                data-testid={`${testId}-after-description`}
+              >
                 {project.after.description}
               </Text>
             </VStack>

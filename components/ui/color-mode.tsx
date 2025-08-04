@@ -50,13 +50,24 @@ export const ColorModeButton = React.forwardRef<
         onClick={toggleColorMode}
         variant="ghost"
         aria-label="Toggle color mode"
-        size="sm"
+        size="lg"
+        color="white"
+        _hover={{ 
+          bg: "primaryContainer", 
+          color: "onPrimaryContainer",
+          transform: "scale(1.05)",
+        }}
+        _active={{
+          transform: "scale(0.95)",
+        }}
+        transition="all 0.2s ease-in-out"
+        borderRadius="full"
         ref={ref}
         {...props}
         css={{
           _icon: {
-            width: "5",
-            height: "5",
+            width: "6",
+            height: "6",
           },
         }}
       >
@@ -70,10 +81,10 @@ export const LightMode = React.forwardRef<HTMLSpanElement, SpanProps>(
   function LightMode(props, ref) {
     return (
       <Span
-        color="fg"
+        color="onSurface"
         display="contents"
         className="chakra-theme light"
-        colorPalette="gray"
+        colorPalette="neutral"
         colorScheme="light"
         ref={ref}
         {...props}
@@ -86,10 +97,10 @@ export const DarkMode = React.forwardRef<HTMLSpanElement, SpanProps>(
   function DarkMode(props, ref) {
     return (
       <Span
-        color="fg"
+        color="onSurface"
         display="contents"
         className="chakra-theme dark"
-        colorPalette="gray"
+        colorPalette="neutral"
         colorScheme="dark"
         ref={ref}
         {...props}

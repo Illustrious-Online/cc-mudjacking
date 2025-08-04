@@ -22,15 +22,27 @@ export default function TestimonialCard({
   'data-testid': testId = 'testimonial-card' 
 }: TestimonialCardProps) {
   return (
-    <Card.Root data-testid={testId} shadow="lg" p={6}>
-      <VStack align="start" gap={4}>
-        <HStack gap={3}>
+    <Card.Root 
+      data-testid={testId} 
+      shadow="elevation1"
+      borderRadius="large"
+      overflow="hidden"
+      p={6}
+      _hover={{
+        shadow: "elevation3",
+        transform: "translateY(-4px)",
+      }}
+      transition="all 0.3s ease-in-out"
+    >
+      <VStack align="start" gap={6}>
+        <HStack gap={4}>
           <Box
-            w={10}
-            h={10}
+            w={12}
+            h={12}
             borderRadius="full"
             overflow="hidden"
-            bg="gray.200"
+            bg="surfaceVariant"
+            boxShadow="elevation1"
             data-testid={`${testId}-avatar`}
           >
             <Image
@@ -41,11 +53,24 @@ export default function TestimonialCard({
               objectFit="cover"
             />
           </Box>
-          <VStack align="start" gap={0}>
-            <Text fontWeight="semibold" data-testid={`${testId}-name`}>
+          <VStack align="start" gap={1}>
+            <Text 
+              fontWeight="medium"
+              fontSize="titleMedium"
+              lineHeight="titleMedium"
+              letterSpacing="titleMedium"
+              color="onSurface"
+              data-testid={`${testId}-name`}
+            >
               {testimonial.name}
             </Text>
-            <Text fontSize="sm" color="gray.500" data-testid={`${testId}-location`}>
+            <Text 
+              fontSize="bodyMedium" 
+              color="onSurfaceVariant"
+              lineHeight="bodyMedium"
+              letterSpacing="bodyMedium"
+              data-testid={`${testId}-location`}
+            >
               {testimonial.location}
             </Text>
             <StarRating 
@@ -58,19 +83,36 @@ export default function TestimonialCard({
         <Box position="relative" data-testid={`${testId}-quote`}>
           <Icon
             as={FaQuoteLeft}
-            color="brand.300"
+            color="primary"
             boxSize={6}
             position="absolute"
             top={-2}
             left={-2}
             data-testid={`${testId}-quote-icon`}
           />
-          <Text fontSize="md" color="gray.700" pl={6} data-testid={`${testId}-text`}>
+          <Text 
+            fontSize="bodyLarge" 
+            color="onSurface"
+            lineHeight="bodyLarge"
+            letterSpacing="bodyLarge"
+            pl={8} 
+            data-testid={`${testId}-text`}
+          >
             {testimonial.text}
           </Text>
         </Box>
         
-        <Badge colorScheme="brand" variant="subtle" data-testid={`${testId}-service`}>
+        <Badge 
+          bg="primaryContainer" 
+          color="onPrimaryContainer"
+          borderRadius="medium"
+          px={3}
+          py={1}
+          fontSize="labelSmall"
+          fontWeight="medium"
+          letterSpacing="labelSmall"
+          data-testid={`${testId}-service`}
+        >
           {testimonial.service}
         </Badge>
       </VStack>

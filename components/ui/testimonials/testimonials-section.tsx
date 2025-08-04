@@ -28,14 +28,29 @@ export default function TestimonialsSection({
   'data-testid': testId = 'testimonials-section',
 }: TestimonialsSectionProps) {
   return (
-    <Box py={16} data-testid={testId}>
+    <Box py={20} bg="surface" data-testid={testId}>
       <Container maxW="7xl">
-        <VStack gap={12}>
-          <VStack textAlign="center" gap={4} data-testid={`${testId}-header`}>
-            <Heading color="brand.500" as="h2" size="xl" data-testid={`${testId}-title`}>
+        <VStack gap={16}>
+          <VStack textAlign="center" gap={6} maxW="4xl" mx="auto" data-testid={`${testId}-header`}>
+            <Heading 
+              color="onSurface" 
+              as="h2" 
+              fontSize={{ base: 'headlineMedium', md: 'headlineLarge' }}
+              fontWeight="medium"
+              lineHeight={{ base: 'headlineMedium', md: 'headlineLarge' }}
+              letterSpacing={{ base: 'headlineMedium', md: 'headlineLarge' }}
+              data-testid={`${testId}-title`}
+            >
               {title}
             </Heading>
-            <Text fontSize="lg" color="gray.500" maxW="3xl" data-testid={`${testId}-description`}>
+            <Text 
+              fontSize="bodyLarge"
+              lineHeight="bodyLarge"
+              letterSpacing="bodyLarge"
+              color="onSurfaceVariant" 
+              maxW="3xl" 
+              data-testid={`${testId}-description`}
+            >
               {description}
             </Text>
           </VStack>
@@ -50,8 +65,16 @@ export default function TestimonialsSection({
             ))}
           </SimpleGrid>
 
-          <VStack gap={6} data-testid={`${testId}-cta`}>
-            <Text fontSize="lg" textAlign="center" color="gray.600" data-testid={`${testId}-cta-text`}>
+          <VStack gap={8} data-testid={`${testId}-cta`}>
+            <Text 
+              fontSize="titleLarge"
+              lineHeight="titleLarge"
+              letterSpacing="titleLarge"
+              textAlign="center" 
+              color="onSurface"
+              fontWeight="medium"
+              data-testid={`${testId}-cta-text`}
+            >
               Ready to see similar results on your property?
             </Text>
             <NavLink
@@ -59,7 +82,23 @@ export default function TestimonialsSection({
               buttonProps={{
                 size: 'lg',
                 variant: 'solid',
-                colorScheme: 'brand',
+                colorScheme: 'primary',
+                borderRadius: 'full',
+                px: 8,
+                py: 6,
+                fontSize: 'labelLarge',
+                fontWeight: 'medium',
+                letterSpacing: 'labelLarge',
+                boxShadow: 'elevation2',
+                _hover: {
+                  transform: 'translateY(-2px)',
+                  boxShadow: 'elevation4',
+                },
+                _active: {
+                  transform: 'translateY(0px)',
+                  boxShadow: 'elevation1',
+                },
+                transition: 'all 0.2s ease-in-out',
               }}
               data-testid={`${testId}-cta-button`}
             >
