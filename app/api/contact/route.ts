@@ -39,8 +39,9 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authToken}`,
-        'X-Supabase-Project-Ref': process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0] || '',
+        Authorization: `Bearer ${authToken}`,
+        'X-Supabase-Project-Ref':
+          process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0] || '',
         'X-Token-Type': 'limited-scope-jwt',
         'X-Token-Expires': new Date(Date.now() + 5 * 60 * 1000).toISOString(), // 5 minutes from now
       },
@@ -53,7 +54,7 @@ export async function POST(request: NextRequest) {
         statusText: externalApiResponse.statusText,
         data: validatedData,
       });
-      
+
       return NextResponse.json(
         {
           message: 'Failed to submit inquiry to external service',
@@ -78,7 +79,6 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
-
   } catch (error) {
     console.error('Contact form error:', error);
 

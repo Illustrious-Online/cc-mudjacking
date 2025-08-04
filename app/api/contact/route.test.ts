@@ -53,7 +53,7 @@ describe('Contact API Route', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer mock-jwt-token',
+          Authorization: 'Bearer mock-jwt-token',
           'X-Supabase-Project-Ref': '',
           'X-Token-Type': 'limited-scope-jwt',
           'X-Token-Expires': expect.any(String),
