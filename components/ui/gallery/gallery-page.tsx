@@ -1,11 +1,11 @@
 import type { IconType } from 'react-icons';
 import Wrapper from '@/components/ui/wrapper';
-import GalleryHero from './gallery-hero';
 import GallerySection from './gallery-section';
 import TestimonialsSection from '@/components/ui/testimonials/testimonials-section';
 import CallToActionButtons from '@/components/ui/call-to-action-buttons';
 import type { GalleryData, GalleryProject, Testimonial } from '../types';
 import { Box } from '@chakra-ui/react';
+import { Hero } from '../hero';
 
 export interface GalleryPageProps {
   title?: string;
@@ -43,7 +43,7 @@ export default function GalleryPage({
 
   return (
     <Wrapper>
-      <GalleryHero title={title} description={description} />
+      <Hero title={title} description={description} testId="gallery-hero" />
 
       {displaySections.map((section) => (
         <GallerySection

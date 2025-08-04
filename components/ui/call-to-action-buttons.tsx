@@ -2,6 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import { FaPhone } from 'react-icons/fa';
 import NavLink from './nav-link';
 import { FREE_ESTIMATE, PHONE_NUMBER } from '@/app/constants';
+import { buttonStyles } from './shared-styles';
 
 export interface CallToActionButtonsProps {
   /** Custom margin top value, defaults to 8 */
@@ -11,30 +12,37 @@ export interface CallToActionButtonsProps {
 export default function CallToActionButtons({ 
   mt = 8,
 }: CallToActionButtonsProps) {
+  const primaryButtonStyles = {
+    ...buttonStyles.large,
+    ...buttonStyles.primary,
+  };
+
+  const secondaryButtonStyles = {
+    ...buttonStyles.large,
+    ...buttonStyles.secondary,
+  };
+
   return (
-    <Flex gap={4} justifyContent="center" alignItems="center" mt={mt} direction={{ base: 'column', md: 'row' }}>
+    <Flex 
+      gap={8} 
+      justifyContent="center" 
+      alignItems="center" 
+      mt={mt} 
+      direction={{ base: 'column', md: 'row' }}
+      flexWrap="wrap"
+    >
       <NavLink
         href="/contact"
-        buttonProps={{
-          size: 'lg',
-          variant: 'solid',
-          colorScheme: 'brand',
-          maxW: '20em',
-        }}
+        buttonProps={primaryButtonStyles}
       >
         {FREE_ESTIMATE}
       </NavLink>
       <NavLink
         href="tel:6416919999"
-        buttonProps={{
-          size: 'lg',
-          variant: 'outline',
-          colorScheme: 'brand',
-          maxW: '20em',
-        }}
+        buttonProps={secondaryButtonStyles}
       >
         <FaPhone />
-        <Text fontSize="sm">{PHONE_NUMBER}</Text>
+        <span style={{ fontSize: '14px', marginLeft: '12px', fontWeight: '700' }}>{PHONE_NUMBER}</span>
       </NavLink>
     </Flex>
   );

@@ -14,41 +14,48 @@ interface LayoutProps {
 const Wrapper: FC<LayoutProps> = ({ children }) => {
   const { colorMode } = useColorMode();
 
+  // Reusable styles
+  const logoStyles = {
+    borderRadius: "medium" as const,
+    src: "/logo-white.jpg",
+    alt: "Logo" as const,
+    width: "6rem" as const,
+    transition: "transform 0.2s ease-in-out",
+    _hover: { transform: "scale(1.05)" },
+  };
+
+  const headerStyles = {
+    padding: 4,
+    color: "white" as const,
+    align: "center" as const,
+    position: { base: "sticky", md: "relative" } as const,
+    top: 0,
+    zIndex: 1000,
+    bg: "neutral.0",
+    borderBottom: { base: "1px solid", md: "none" } as const,
+    borderColor: "outlineVariant",
+    boxShadow: "elevation1",
+  };
+
   return (
-    <Box minHeight="100vh" display="flex" flexDirection="column">
+    <Box minHeight="100vh" display="flex" flexDirection="column" bg="background">
       <Toaster />
-      <Flex 
-        as="header" 
-        padding={4} 
-        color="white" 
-        align="center" 
-        position={{ base: "sticky", md: "relative" }}
-        top={0}
-        zIndex={1000}
-        bg="brand.600"
-        borderBottom={{ base: "1px solid", md: "none" }}
-        borderColor="whiteAlpha.200"
-      >
+      <Flex as="header" {...headerStyles}>
         {/* Desktop: Logo on left */}
         <Image 
-          borderRadius="md" 
-          src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} 
-          alt="Logo" 
-          width={"6rem"} 
+          {...logoStyles}
           mr={6}
           display={{ base: "none", md: "block" }}
         />
         
         {/* Mobile: Centered logo */}
         <Image 
-          borderRadius="md" 
-          src={colorMode === "dark" ? "/logo-white.jpg" : '/logo.png'} 
-          alt="Logo" 
-          width={"6rem"} 
+          {...logoStyles}
           position="absolute"
           left="50%"
           transform="translateX(-50%)"
           display={{ base: "block", md: "none" }}
+          _hover={{ transform: "translateX(-50%) scale(1.05)" }}
         />
         
         {/* Navigation */}
