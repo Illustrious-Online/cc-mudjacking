@@ -258,7 +258,7 @@ export default function HomePage() {
                       </Text>
                       <VStack align="start" gap={3} fontSize="bodyMedium">
                         {service.features.map((feature) => (
-                          <Text key={feature} display="flex" alignItems="center" gap={3}>
+                          <Box key={feature} display="flex" alignItems="center" gap={3}>
                             <Box
                               w={3}
                               h={3}
@@ -266,8 +266,15 @@ export default function HomePage() {
                               borderRadius="full"
                               boxShadow="elevation1"
                             />
-                            {feature}
-                          </Text>
+                            <Text
+                              fontSize="bodyMedium"
+                              lineHeight="bodyMedium"
+                              letterSpacing="bodyMedium"
+                              color="onSurfaceVariant"
+                            >
+                              {feature}
+                            </Text>
+                          </Box>
                         ))}
                       </VStack>
                     </VStack>

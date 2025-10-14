@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Send data to external API with limited-scope JWT token
-    const externalApiResponse = await fetch('https://api.illustrious.cloud/inquiry', {
+    const externalApiResponse = await fetch(`${process.env.ELYSIA_API_URL}/inquiry`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

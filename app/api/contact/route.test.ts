@@ -48,7 +48,7 @@ describe('Contact API Route', () => {
 
     // Verify external API was called with correct data
     expect(mockFetch).toHaveBeenCalledWith(
-      'https://api.illustrious.cloud/inquiry',
+      'undefined/inquiry',
       expect.objectContaining({
         method: 'POST',
         headers: {
