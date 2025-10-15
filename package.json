@@ -17,7 +17,8 @@
     "test:junit": "vitest run --reporter=junit --outputFile=test-report.junit.xml",
     "check": "bunx @biomejs/biome check ./app",
     "check:fix": "bunx @biomejs/biome check --write ./app",
-    "prepare": "husky"
+    "prepare": "husky",
+    "demo:eden": "bun run lib/eden-demo.ts"
   },
   "engines": {
     "bun": "latest"
@@ -36,6 +37,7 @@
     "@chakra-ui/color-mode": "^2.2.0",
     "@chakra-ui/next-js": "^2.4.2",
     "@chakra-ui/react": "^3.27.1",
+    "@elysiajs/eden": "^1.4.4",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@next/env": "^15.5.5",

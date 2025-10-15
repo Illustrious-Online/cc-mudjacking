@@ -131,6 +131,51 @@ describe("ContactForm Component", () => {
     });
   });
 
+  it("submits form without phone number", async () => {
+    const mockFetch = vi.mocked(fetch);
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ message: "Success" }),
+    } as Response);
+
+    renderContactForm();
+
+    // Fill in the form (skip phone number)
+    fireEvent.change(screen.getByLabelText(/full name/i), {
+      target: { value: "John Doe" },
+    });
+    fireEvent.change(screen.getByLabelText(/email address/i), {
+      target: { value: "john@example.com" },
+    });
+    // Skip phone number - leave it empty
+    fireEvent.change(screen.getByLabelText(/service needed/i), {
+      target: { value: "residential" },
+    });
+    fireEvent.change(screen.getByLabelText(/project details/i), {
+      target: { value: "This is a test message with enough characters to pass validation." },
+    });
+
+    const submitButton = screen.getByRole("button", { name: /send message/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "John Doe",
+          email: "john@example.com",
+          phone: "", // Empty phone number
+          service: "residential",
+          message: "This is a test message with enough characters to pass validation.",
+          recaptchaToken: "mock-recaptcha-token",
+        }),
+      });
+    });
+  });
+
   it("shows success toast on successful submission", async () => {
     const { toaster } = await import("@/components/ui/toaster");
     const mockToaster = vi.mocked(toaster);

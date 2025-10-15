@@ -2,21 +2,12 @@
 
 import { Button, VStack, HStack, Box } from '@chakra-ui/react';
 import { Form, Formik, type FormikValues } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
-import { z } from 'zod';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { toaster } from './toaster';
 import InputControl from './input-control';
 import { buttonStyles } from './shared-styles';
 import ContentCard from './content-card';
-
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string(),
-  service: z.string().min(1, 'Please select a service'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-});
+import { submitContactForm } from '../../lib/eden-client';
 
 const SERVICES = [
   { value: 'residential', label: 'Residential Mudjacking' },
@@ -27,7 +18,7 @@ const SERVICES = [
   { value: 'other', label: 'Other Services' },
 ];
 
-export default function ContactForm() {
+export default function ContactFormEden() {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async (values: FormikValues) => {
@@ -39,40 +30,43 @@ export default function ContactForm() {
 
       const recaptchaToken = await executeRecaptcha('contact_form');
 
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      // Use Eden Treaty for type-safe API call
+      const response = await submitContactForm({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        service: values.service,
+        message: values.message,
+        timestamp: new Date().toISOString(),
+      }, {
         headers: {
-          'Content-Type': 'application/json',
+          'X-Org-Id': 'cc-mudjacking',
+          'Authorization': `Bearer ${recaptchaToken}`, // Using recaptcha token as auth for demo
         },
-        body: JSON.stringify({
-          ...values,
-          recaptchaToken,
-        }),
       });
 
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        // Handle specific error cases
+      // TypeScript knows the exact response structure
+      if (response.data) {
+        toaster.create({
+          title: 'Message sent successfully!',
+          description: `We will get back to you within 24 hours. Reference ID: ${response.data.data.id}`,
+          type: 'success',
+          duration: 5000,
+        });
+      } else if (response.error) {
+        // TypeScript knows the exact error structure from Eden Treaty
         let errorMessage = 'Please try again or contact us directly.';
         
-        if (response.status === 502) {
-          errorMessage = 'Our inquiry service is temporarily unavailable. Please try again later or contact us directly.';
-        } else if (response.status === 503) {
-          errorMessage = 'Network error. Please check your connection and try again.';
-        } else if (response.status === 400) {
+        if (response.error.status === 422) {
           errorMessage = 'Please check your form entries and try again.';
+        } else if (response.error.status === 500) {
+          errorMessage = 'Our inquiry service is temporarily unavailable. Please try again later.';
+        } else if (response.error.status === 503) {
+          errorMessage = 'Network error. Please check your connection and try again.';
         }
 
-        throw new Error(responseData.message || errorMessage);
+        throw new Error(response.error.value?.message || errorMessage);
       }
-
-      toaster.create({
-        title: 'Message sent successfully!',
-        description: 'We will get back to you within 24 hours.',
-        type: 'success',
-        duration: 5000,
-      });
     } catch (error) {
       console.error('Contact form submission error:', error);
       
@@ -236,4 +230,4 @@ export default function ContactForm() {
       </Box>
     </ContentCard>
   );
-} 
+}
