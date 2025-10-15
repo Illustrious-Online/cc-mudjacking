@@ -17,8 +17,7 @@
     "test:junit": "vitest run --reporter=junit --outputFile=test-report.junit.xml",
     "check": "bunx @biomejs/biome check ./app",
     "check:fix": "bunx @biomejs/biome check --write ./app",
-    "prepare": "husky",
-    "demo:eden": "bun run lib/eden-demo.ts"
+    "prepare": "husky"
   },
   "engines": {
     "bun": "latest"

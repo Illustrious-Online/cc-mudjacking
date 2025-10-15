@@ -43,10 +43,7 @@ export default defineConfig({
         'app/api/**',
         // SEO components (external service integration)
         'components/seo/**',
-        // Demo/example files
-        'components/ui/contact-form-eden.tsx',
-        'lib/eden-demo.ts',
-        'lib/eden-examples.ts',
+        // Demo/example files (removed)
         // Library configuration and utility files
         'lib/seo-config.ts',
         'lib/supabase.ts',
@@ -61,7 +58,6 @@ export default defineConfig({
         'CONTRIBUTING.md',
         'LICENSE',
         'SEO-SETUP.md',
-        'EDEN_TREATY_SETUP.md',
         // Docker and deployment files
         'Dockerfile',
         'k8s/**',
