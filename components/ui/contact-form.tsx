@@ -4,6 +4,7 @@ import { Button, VStack, HStack, Box } from '@chakra-ui/react';
 import { Form, Formik, type FormikValues } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { z } from 'zod';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { toaster } from './toaster';
 import InputControl from './input-control';
 import { buttonStyles } from './shared-styles';
@@ -27,14 +28,26 @@ const SERVICES = [
 ];
 
 export default function ContactForm() {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const handleSubmit = async (values: FormikValues) => {
     try {
+      // Execute reCAPTCHA and get the token
+      if (!executeRecaptcha) {
+        throw new Error('reCAPTCHA not available');
+      }
+
+      const recaptchaToken = await executeRecaptcha('contact_form');
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          recaptchaToken,
+        }),
       });
 
       const responseData = await response.json();

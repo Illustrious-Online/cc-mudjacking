@@ -5,6 +5,7 @@ import { ThemeProvider } from 'next-themes';
 import { GoogleAnalytics, GoogleSearchConsole } from '@/components/seo/google-analytics';
 import { StructuredData } from '@/components/seo/structured-data';
 import { WebVitals } from '@/components/seo/web-vitals';
+import ReCaptchaProvider from '@/components/ui/recaptcha-provider';
 import { defaultMetadata } from '@/lib/seo';
 import { ChakraProvider } from '@/providers/ChakraProvider';
 
@@ -32,10 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         <ChakraProvider>
-          <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-            {children}
-            <WebVitals />
-          </ThemeProvider>
+          <ReCaptchaProvider>
+            <ThemeProvider attribute="class" enableSystem defaultTheme="system">
+              {children}
+              <WebVitals />
+            </ThemeProvider>
+          </ReCaptchaProvider>
         </ChakraProvider>
       </body>
     </html>

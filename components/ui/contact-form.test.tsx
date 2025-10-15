@@ -10,6 +10,13 @@ vi.mock("@/components/ui/toaster", () => ({
   },
 }));
 
+// Mock reCAPTCHA
+vi.mock("react-google-recaptcha-v3", () => ({
+  useGoogleReCaptcha: () => ({
+    executeRecaptcha: vi.fn().mockResolvedValue("mock-recaptcha-token"),
+  }),
+}));
+
 // Mock fetch
 global.fetch = vi.fn();
 
@@ -118,6 +125,7 @@ describe("ContactForm Component", () => {
           phone: "5551234567",
           service: "residential",
           message: "This is a test message with enough characters to pass validation.",
+          recaptchaToken: "mock-recaptcha-token",
         }),
       });
     });
