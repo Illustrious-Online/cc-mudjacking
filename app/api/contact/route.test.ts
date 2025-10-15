@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { POST } from './route';
 import { submitContactForm } from '../../../lib/eden-client';
+import { POST } from './route';
 
 // Mock the Eden Treaty client
 vi.mock('../../../lib/eden-client', () => ({
@@ -28,12 +28,12 @@ describe('Contact API Route', () => {
     });
 
     // Mock Eden Treaty client with successful response
-    (submitContactForm as any).mockResolvedValue({
+    vi.mocked(submitContactForm).mockResolvedValue({
       data: {
         message: 'Inquiry created successfully',
-        data: { success: true, id: '12345' }
+        data: { success: true, id: '12345' },
       },
-      error: null
+      error: null,
     });
 
     // Mock environment variables
@@ -103,7 +103,6 @@ describe('Contact API Route', () => {
       })
     );
 
-
     expect(mockConsoleLog).toHaveBeenCalledWith(
       'Contact form submitted successfully:',
       expect.objectContaining({
@@ -145,21 +144,20 @@ describe('Contact API Route', () => {
 
   it('handles external API failure', async () => {
     // Mock successful reCAPTCHA verification first
-    mockFetch
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ success: true, score: 0.9 }),
-      });
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ success: true, score: 0.9 }),
+    });
 
     // Mock Eden Treaty client with error response
-    (submitContactForm as any).mockResolvedValue({
+    vi.mocked(submitContactForm).mockResolvedValue({
       data: null,
       error: {
         status: 500,
         value: {
-          message: 'External service unavailable'
-        }
-      }
+          message: 'External service unavailable',
+        },
+      },
     });
 
     const validData = {
