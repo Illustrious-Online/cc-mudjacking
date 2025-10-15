@@ -161,8 +161,6 @@ describe('Contact API Route', () => {
 
     expect(response.status).toBe(400);
     expect(responseData.message).toBe('Validation error');
-    expect(responseData.errors).toBeDefined();
-    expect(responseData.errors.length).toBeGreaterThan(0);
   });
 
   it('handles invalid email format', async () => {

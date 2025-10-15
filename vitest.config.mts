@@ -9,19 +9,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./setupTests.ts'],
-    browser: {
-      enabled: true,
-      name: 'chromium',
-      provider: 'playwright',
-      providerOptions: {
-        launch: {
-          args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage'
-          ]
-        }
-      }
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+      },
     },
     coverage: {
       provider: 'v8',
@@ -82,11 +73,6 @@ export default defineConfig({
           lines: 70,
           statements: 70,
         },
-      },
-    },
-    environmentOptions: {
-      jsdom: {
-        resources: 'usable',
       },
     },
   },

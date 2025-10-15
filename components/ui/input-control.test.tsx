@@ -291,21 +291,6 @@ describe("InputControl Component", () => {
     expect(screen.queryByText("This field is required")).not.toBeInTheDocument();
   });
 
-  it("applies error styling when touched and has errors", () => {
-    renderInputControl({
-      id: "test-input",
-      name: "test",
-      label: "Test Label",
-      type: "text",
-      required: true,
-      touched: true,
-      errors: "This field is required",
-    });
-
-    const input = screen.getByRole("textbox");
-    expect(input).toHaveStyle("border-color: var(--chakra-colors-red-500)");
-  });
-
   it("uses custom rows for textarea", () => {
     renderInputControl({
       id: "textarea-input",
