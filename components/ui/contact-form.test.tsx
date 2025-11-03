@@ -11,10 +11,16 @@ vi.mock("@/components/ui/toaster", () => ({
 }));
 
 // Mock reCAPTCHA
+const { mockExecuteRecaptcha, mockUseGoogleReCaptcha } = vi.hoisted(() => {
+  const mockExecuteRecaptcha = vi.fn().mockResolvedValue("mock-recaptcha-token");
+  const mockUseGoogleReCaptcha = vi.fn(() => ({
+    executeRecaptcha: mockExecuteRecaptcha,
+  }));
+  return { mockExecuteRecaptcha, mockUseGoogleReCaptcha };
+});
+
 vi.mock("react-google-recaptcha-v3", () => ({
-  useGoogleReCaptcha: () => ({
-    executeRecaptcha: vi.fn().mockResolvedValue("mock-recaptcha-token"),
-  }),
+  useGoogleReCaptcha: () => mockUseGoogleReCaptcha(),
 }));
 
 // Mock fetch
@@ -31,6 +37,11 @@ describe("ContactForm Component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    // Reset reCAPTCHA mock to default behavior
+    mockExecuteRecaptcha.mockResolvedValue("mock-recaptcha-token");
+    mockUseGoogleReCaptcha.mockReturnValue({
+      executeRecaptcha: mockExecuteRecaptcha,
+    });
   });
 
   it("renders the contact form with all required fields", () => {
@@ -476,5 +487,67 @@ describe("ContactForm Component", () => {
     expect(submitButton).toBeDisabled();
   });
 
+  it("shows name validation error when name is empty or less than 2 characters", async () => {
+    renderContactForm();
+
+    const nameInput = screen.getByLabelText(/full name/i);
+    
+    // Test with empty name
+    fireEvent.change(nameInput, { target: { value: "" } });
+    fireEvent.blur(nameInput);
+
+    await waitFor(() => {
+      expect(screen.getByText("Name must be at least 2 characters")).toBeInTheDocument();
+    });
+
+    // Test with name less than 2 characters
+    fireEvent.change(nameInput, { target: { value: "A" } });
+    fireEvent.blur(nameInput);
+
+    await waitFor(() => {
+      expect(screen.getByText("Name must be at least 2 characters")).toBeInTheDocument();
+    });
+  });
+
+  it("throws error when reCAPTCHA is not available", async () => {
+    const { toaster } = await import("@/components/ui/toaster");
+    const mockToaster = vi.mocked(toaster);
+    
+    // Mock reCAPTCHA hook to return undefined executeRecaptcha
+    mockUseGoogleReCaptcha.mockReturnValueOnce({
+      executeRecaptcha: undefined,
+    } as any);
+
+    renderContactForm();
+
+    // Fill in the form with valid data
+    fireEvent.change(screen.getByLabelText(/full name/i), {
+      target: { value: "John Doe" },
+    });
+    fireEvent.change(screen.getByLabelText(/email address/i), {
+      target: { value: "john@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText(/phone number/i), {
+      target: { value: "5551234567" },
+    });
+    fireEvent.change(screen.getByLabelText(/service needed/i), {
+      target: { value: "residential" },
+    });
+    fireEvent.change(screen.getByLabelText(/project details/i), {
+      target: { value: "This is a test message with enough characters to pass validation." },
+    });
+
+    const submitButton = screen.getByRole("button", { name: /send message/i });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockToaster.create).toHaveBeenCalledWith({
+        title: "Error sending message",
+        description: "Please try again or contact us directly.",
+        type: "error",
+        duration: 5000,
+      });
+    });
+  });
 
 }); 
