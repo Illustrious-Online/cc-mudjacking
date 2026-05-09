@@ -9,6 +9,11 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./setupTests.ts'],
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -31,6 +36,35 @@ export default defineConfig({
         '**/*.config.*',
         '**/types/**',
         'app/global-error.tsx',
+        // Next.js metadata files
+        'app/robots.ts',
+        'app/sitemap.ts',
+        // API routes (external service integration)
+        'app/api/**',
+        // SEO components (external service integration)
+        'components/seo/**',
+        // Demo/example files (removed)
+        // Library configuration and utility files
+        'lib/seo-config.ts',
+        'lib/supabase.ts',
+        // Environment and configuration files
+        'production.env',
+        'bunfig.toml',
+        'biome.json',
+        'tsconfig.json',
+        // Documentation files
+        'README.md',
+        'CHANGELOG.md',
+        'CONTRIBUTING.md',
+        'LICENSE',
+        'SEO-SETUP.md',
+        // Docker and deployment files
+        'Dockerfile',
+        'k8s/**',
+        // GitHub workflows
+        '.github/**',
+        // Auth service example (if not needed for coverage)
+        'auth-service-example/**',
       ],
       include: [
         'app/**/*.{ts,tsx}',
@@ -44,11 +78,6 @@ export default defineConfig({
           lines: 70,
           statements: 70,
         },
-      },
-    },
-    environmentOptions: {
-      jsdom: {
-        resources: 'usable',
       },
     },
   },

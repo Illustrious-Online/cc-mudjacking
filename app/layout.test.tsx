@@ -25,19 +25,48 @@ describe('RootLayout', () => {
   });
 
   describe('metadata', () => {
-    it('exports correct metadata', () => {
-      expect(metadata).toEqual({
-        title: 'CC Mudjacking',
-        description: 'Professional mudjacking services',
+    it('exports correct metadata structure', () => {
+      expect(metadata).toMatchObject({
+        title: {
+          default: 'CC Mudjacking - Professional Mudjacking & Concrete Leveling Services',
+          template: '%s | CC Mudjacking',
+        },
+        description:
+          'Professional mudjacking and concrete leveling services. Fast, affordable, and permanent solutions for sunken concrete. Serving residential and commercial properties with environmentally friendly methods.',
+        keywords: expect.arrayContaining([
+          'mudjacking',
+          'concrete leveling',
+          'concrete repair',
+          'sunken concrete',
+        ]),
+        authors: [{ name: 'CC Mudjacking' }],
+        creator: 'CC Mudjacking',
+        publisher: 'CC Mudjacking',
+        openGraph: expect.objectContaining({
+          type: 'website',
+          siteName: 'CC Mudjacking',
+        }),
+        twitter: expect.objectContaining({
+          card: 'summary_large_image',
+        }),
+        robots: expect.objectContaining({
+          index: true,
+          follow: true,
+        }),
       });
     });
 
-    it('has title property', () => {
-      expect(metadata.title).toBe('CC Mudjacking');
+    it('has title property with correct structure', () => {
+      expect(metadata.title).toEqual({
+        default: 'CC Mudjacking - Professional Mudjacking & Concrete Leveling Services',
+        template: '%s | CC Mudjacking',
+      });
     });
 
     it('has description property', () => {
-      expect(metadata.description).toBe('Professional mudjacking services');
+      expect(metadata.description).toBe(
+        'Professional mudjacking and concrete leveling services. Fast, affordable, and permanent solutions for sunken concrete. Serving residential and commercial properties with environmentally friendly methods.'
+      );
     });
   });
 

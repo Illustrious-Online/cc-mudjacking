@@ -1,9 +1,17 @@
-'use client';
-
 import { Box, Card, Container, Heading, Text, VStack } from '@chakra-ui/react';
+import type { Metadata } from 'next';
 import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaShieldAlt } from 'react-icons/fa';
 import Wrapper from '@/components/ui/wrapper';
+import { generatePageMetadata } from '@/lib/seo';
 import { PHONE_NUMBER } from '../constants';
+
+export const metadata: Metadata = generatePageMetadata({
+  title: 'Privacy Policy - CC Mudjacking',
+  description:
+    'CC Mudjacking privacy policy. Learn how we collect, use, and protect your personal information when you use our mudjacking and concrete leveling services.',
+  path: '/privacy',
+  noIndex: true, // Privacy pages typically shouldn't be indexed
+});
 
 export default function PrivacyPage() {
   const currentYear = new Date().getFullYear();

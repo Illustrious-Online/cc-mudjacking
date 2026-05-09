@@ -4,6 +4,7 @@ import { Button, VStack, HStack, Box } from '@chakra-ui/react';
 import { Form, Formik, type FormikValues } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { z } from 'zod';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { toaster } from './toaster';
 import InputControl from './input-control';
 import { buttonStyles } from './shared-styles';
@@ -12,7 +13,7 @@ import ContentCard from './content-card';
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
+  phone: z.string(),
   service: z.string().min(1, 'Please select a service'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
@@ -27,14 +28,26 @@ const SERVICES = [
 ];
 
 export default function ContactForm() {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const handleSubmit = async (values: FormikValues) => {
     try {
+      // Execute reCAPTCHA and get the token
+      if (!executeRecaptcha) {
+        throw new Error('reCAPTCHA not available');
+      }
+
+      const recaptchaToken = await executeRecaptcha('contact_form');
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          recaptchaToken,
+        }),
       });
 
       const responseData = await response.json();
@@ -103,7 +116,27 @@ export default function ContactForm() {
             service: '',
             message: '',
           }}
-          validate={withZodSchema(contactSchema)}
+          validate={(values) => {
+            const errors: any = {};
+            
+            if (!values.name || values.name.length < 2) {
+              errors.name = 'Name must be at least 2 characters';
+            }
+            
+            if (!values.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+              errors.email = 'Please enter a valid email address';
+            }
+            
+            if (!values.service) {
+              errors.service = 'Please select a service';
+            }
+            
+            if (!values.message || values.message.length < 10) {
+              errors.message = 'Message must be at least 10 characters';
+            }
+            
+            return errors;
+          }}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, errors, touched, isValid, dirty, values, handleChange, handleBlur, setFieldValue, setFieldTouched }) => (
@@ -143,9 +176,9 @@ export default function ContactForm() {
                   <InputControl
                     id="phone"
                     name="phone"
-                    label="Phone Number"
+                    label="Phone Number (Optional)"
                     type="phone"
-                    required={true}
+                    required={false}
                     placeholder="(555) 123-4567"
                     value={values.phone}
                     setFieldValue={setFieldValue}
