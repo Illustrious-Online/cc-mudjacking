@@ -19,7 +19,6 @@
       "!**/*.bundle.js",
       "!**/*.bundle.css",
       "!**/public/**",
-      "!**/k8s/**",
       "!**/*.lockb",
       "!**/*.lock",
       "!**/*.log",
