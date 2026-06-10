@@ -1,5 +1,9 @@
 
-FROM oven/bun:latest AS builder
+# Base mirrored from oven/bun into GHCR by illustrious.platform's
+# mirror-base-images.yml — pinned to :1.3 and pulled from our own registry so
+# builds don't depend on Docker Hub. The cc-mudjacking repo must have read access
+# to the ghcr.io/illustrious-online/bun package; CI logs into ghcr.io first.
+FROM ghcr.io/illustrious-online/bun:1.3 AS builder
 
 WORKDIR /app
 
@@ -16,7 +20,7 @@ ENV NEXT_PUBLIC_RECAPTCHA_SITE_KEY=$NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 RUN bun run build
 
-FROM oven/bun:latest AS production
+FROM ghcr.io/illustrious-online/bun:1.3 AS production
 
 WORKDIR /app
 COPY --from=builder /app/.next/standalone ./
