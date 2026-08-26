@@ -1,5 +1,15 @@
 # CC Mudjacking - Professional Concrete Lifting Services
 
+> **This repository no longer deploys the live site.**
+>
+> ccmudjacking.com is served by the Illustrious Sites service — one multi-tenant
+> deployment rendering the org's saved site config per request (illustrious.platform,
+> `apps/sites-essentials`). It cut over in illustrious.platform#188, and the live
+> domain is routed by per-domain ingresses in the cluster's `sites` namespace.
+>
+> Content changes are published with `cloud site set`, not by merging here. This
+> Next.js source is kept for reference and for anything not yet ported.
+
 A modern, responsive website for CC Mudjacking, a professional concrete lifting and foundation repair company. Built with Next.js 15 and Chakra UI.
 
 ## 🏗️ About
